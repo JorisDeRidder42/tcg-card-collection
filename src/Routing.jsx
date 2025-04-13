@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
-import {ProtectedRoute } from './src/Pages/ProtectedRoute';
-import { useAuth } from './src/Context/authContext';
-import Home from './src/Pages/home';
-import Login from './src/Pages/Login';
+import {ProtectedRoute } from './Pages/ProtectedRoute';
+import { useAuth } from './Context/authContext';
+import Home from './Pages/home';
+import Login from './Pages/Login';
 
 
 const Routing = () => {

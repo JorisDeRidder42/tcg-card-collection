@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {useFetchList} from '../Hooks/dataHooks';
 import { Container, Row, Col } from 'react-bootstrap';
+import SkeletonCards from '../loaders/SkeletonCards';
 
 
 const Home = () => {
@@ -14,7 +15,7 @@ const Home = () => {
     <div className="p-6 max-w-screen-xl mx-auto">
       {setsLoading ? (
         <p>Loading sets...</p>
-      ) : (<>
+      ) : (
           <select
             value={selectedSetId}
             onChange={(e) => setSelectedSetId(e.target.value)}
@@ -27,12 +28,11 @@ const Home = () => {
               </option>
             ))}
           </select>
-        </>
       )}
       
 
       {cardsLoading ? (
-        <p>Loading cards...</p>
+        <SkeletonCards/>
       ) : 
 
       (<Container>
