@@ -1,49 +1,46 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {useFetchList} from '../Hooks/dataHooks';
 import { Container, Row, Col } from 'react-bootstrap';
 import SkeletonCards from '../loaders/SkeletonCards';
+import Form from 'react-bootstrap/Form';
+import SetSelection from '../components/SetSelecction';
+import CardList from '../components/CardList';
+import SearchBar from '../components/SearchBar';
 
 
 const Home = () => {
   const [selectedSetId, setSelectedSetId] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+
   const { data: sets, isLoading: setsLoading } = useFetchList('/sets');
   const { data: cards, isLoading: cardsLoading } = useFetchList(selectedSetId ? `/cards?q=set.id:${selectedSetId}` : '');
 
   const newSets = sets?.data?.sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
+
+  // Filter cards based on the search query
+  const filteredCards = cards?.data.filter((card) =>
+    card.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="p-6 max-w-screen-xl mx-auto">
       {setsLoading ? (
         <p>Loading sets...</p>
       ) : (
-          <select
-            value={selectedSetId}
-            onChange={(e) => setSelectedSetId(e.target.value)}
-            className="border p-2 rounded mb-6"
-          >
-            <option value="">Select a set</option>
-            {newSets?.map((set) => (
-              <option key={set.id} value={set.id}>
-                {set.name}
-              </option>
-            ))}
-          </select>
+          <SetSelection
+          sets={newSets}
+          selectedSetId={selectedSetId}
+          setSelectedSetId={setSelectedSetId}
+          />
       )}
-      
-
+      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} /> 
       {cardsLoading ? (
         <SkeletonCards/>
       ) : 
 
-      (<Container>
-        <Row>
-          {cards?.data.map((card) => (
-            <Col key={card.id} xs={12} sm={6} md={4} lg={3}>
-              <img src={card.images.small} alt={card.name} className="w-full mt-3" />
-            </Col>
-          ))}
-        </Row>
-      </Container>)}
+      (
+        <CardList cards={filteredCards} /> 
+      )};
     </div>
   );
 };
