@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import {useFetchList} from '../Hooks/dataHooks';
-import { Container, Row, Col } from 'react-bootstrap';
 import SkeletonCards from '../loaders/SkeletonCards';
-import Form from 'react-bootstrap/Form';
+
 import SetSelection from '../components/SetSelecction';
 import CardList from '../components/CardList';
 import SearchBar from '../components/SearchBar';
@@ -33,14 +32,13 @@ const Home = () => {
           setSelectedSetId={setSelectedSetId}
           />
       )}
-      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} /> 
+      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+
       {cardsLoading ? (
         <SkeletonCards/>
-      ) : 
-
-      (
+      ) : (
         <CardList cards={filteredCards} /> 
-      )};
+      )}
     </div>
   );
 };
