@@ -3,6 +3,7 @@ import {ProtectedRoute } from './Pages/ProtectedRoute';
 import { useAuth } from './Context/authContext';
 import Home from './Pages/home';
 import Login from './Pages/Login';
+import Fault from './pages/fault';
 
 
 const Routing = () => {
@@ -19,7 +20,7 @@ const Routing = () => {
         <Route path={'/'} element={<Home/>}/>
             <Route path={'/login'} element={<Login/>}/>
             {/* <Route path={'/register'} element={<Register/>}/> */}
-            <Route path={'*'} element={<></>}/>
+            <Route path={'*'} element={<Fault/>}/>
         </Routes>
     )
 }
