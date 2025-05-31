@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import {ProtectedRoute } from './Pages/ProtectedRoute';
 import { useAuth } from './Context/authContext';
-import Home from './Pages/home';
 import Login from './Pages/Login';
 import Fault from './pages/fault';
+import Home from './Pages/home';
 
 
 const Routing = () => {
