@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 
 
-const CardList = ({ cards, onCardClick }) => {
+const CardList = ({ cards, onCardClick, isCardSaved }) => {
   return (
     <Container>
       <Row>
@@ -10,11 +10,23 @@ const CardList = ({ cards, onCardClick }) => {
           <Col key={card.id} xs={12} sm={6} md={4} lg={3}>
             <div 
               onClick={() => onCardClick(card)} 
-              style={{ cursor: 'pointer', position: 'relative' }}
-            >
-              <img src={card.images.small} alt={card.name} className="w-full mt-3" />
-            </div>
-          </Col>
+               style={{ cursor: 'pointer', marginTop: '12px' }}>
+               <div
+                  style={{
+                    border: isCardSaved && isCardSaved(card.id) ? '4px solid gold' : '4px solid transparent',
+                    borderRadius: '12px',
+                    padding: '6px',
+                    transition: 'border 0.2s ease-in-out',
+                  }}
+                >
+                  <img
+                    src={card.images.small}
+                    alt={card.name}
+                    style={{ width: '100%', display: 'block', borderRadius: '8px' }}
+                  />
+                </div>
+              </div>
+            </Col>
         ))}
       </Row>
     </Container>
