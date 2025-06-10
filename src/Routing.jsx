@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes} from 'react-router-dom';
 import {ProtectedRoute } from './Pages/ProtectedRoute';
 import { useAuth } from './Context/authContext';
 import Fault from './pages/fault';
