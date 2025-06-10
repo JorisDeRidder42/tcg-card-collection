@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import {useFetchList} from '../Hooks/dataHooks';
 import SkeletonCards from '../loaders/SkeletonCards';
 
@@ -6,10 +6,14 @@ import SetSelection from '../components/SetSelecction';
 import CardList from '../components/CardList';
 import SearchBar from '../components/SearchBar';
 import { useAuth } from '../Context/authContext';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 
 const Home = () => {
+  const {authenticated, loading} = useAuth();
+  const {logout } = useAuth();
+  const navigate = useNavigate();
+
   const [searchParams, setSearchParams] = useSearchParams();
   const initialSetId = searchParams.get('set') || '';
   const initialSearchQuery = searchParams.get('search') || '';
@@ -25,6 +29,11 @@ const Home = () => {
 
   const newSets = sets?.data ? [...sets.data].sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)) : [];
 
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
    useEffect(() => {
   if (newSets.length > 0 && !selectedSetId) {
@@ -55,12 +64,15 @@ useEffect(() => {
 
   const isCardSaved = (cardId) => {
   const found = savedCards.some(card => card.id === cardId);
-  console.log(`Checking if card ${cardId} saved:`, found);
+  // console.log(`Checking if card ${cardId} saved:`, found);
   return found;
 }
 
 
   return (
+    <>
+    <h1 className="text-4xl font-bold text-center mb-6">{authenticated ? <p>You are logged in.</p> : <p>You are not logged in.</p>}</h1>
+    <button onClick={handleLogout}>Logout</button>
     <div className="p-6 max-w-screen-xl mx-auto">
       {setsLoading ? (
         <p>Loading sets...</p>
@@ -83,6 +95,7 @@ useEffect(() => {
     />
       )}
     </div>
+        </>
   );
 };
 

@@ -5,7 +5,8 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
-  GoogleAuthProvider
+  GoogleAuthProvider,
+  signOut
 } from 'firebase/auth';
 import { doc, setDoc, deleteDoc, getDocs, collection } from "firebase/firestore";
 import { toast } from 'react-toastify';
@@ -29,13 +30,29 @@ export const AuthProvider = ({ children }) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const signIn = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+  const signIn = async (email, password) => {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const token = await userCredential.user.getIdToken(); // ✅ Correct way to get token
+
+    localStorage.setItem('token', token);
+    console.log('Auth Token:', token);
+
+    return userCredential;
   };
 
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider();
     return signInWithPopup(auth, provider);
+  };
+
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      localStorage.removeItem('token');
+      setAuthenticated(false); 
+    } catch (err) {
+      console.error('Logout failed:', err);
+    }
   };
 
   const toggleSaveCard = async (card) => {
@@ -81,6 +98,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const value = {
+    logout,
     authenticated,
     loading,
     signUp,

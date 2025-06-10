@@ -10,13 +10,13 @@ const Routing = () => {
     const { authenticated } = useAuth();
     return (
         <Routes>
-            {/* <Route exact path="/" 
-             element={<ProtectedRoute authenticated={authenticated}>
+            <Route exact path="/" 
+             element={<ProtectedRoute>
               <Home/>
             </ProtectedRoute>
           }
-        /> */}
-        <Route path={'/'} element={<Home/>}/>
+        />
+        {/* <Route path={'/'} element={<Home/>}/> */}
             <Route path={'/login'} element={<Login/>}/>
             {/* <Route path={'/register'} element={<Register/>}/> */}
             <Route path={'*'} element={<Fault/>}/>
