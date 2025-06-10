@@ -2,6 +2,7 @@
   "name": "tcg-card-collection",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://jorisderidder42.github.io/tcg-card-collection",
   "type": "module",
   "scripts": {
     "dev": "vite",
