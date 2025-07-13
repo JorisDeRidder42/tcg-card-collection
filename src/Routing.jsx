@@ -3,6 +3,7 @@ import {ProtectedRoute } from './Pages/ProtectedRoute';
 import { useAuth } from './Context/authContext';
 import Fault from './pages/fault';
 import Home from './Pages/home';
+import Login from './Pages/Login';  
 
 
 const Routing = () => {

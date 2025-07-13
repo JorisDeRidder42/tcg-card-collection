@@ -11,7 +11,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <BrowserRouter basename="/tcg-card-collection">
+        <BrowserRouter>
           <App />
         </BrowserRouter>
       </AuthProvider>
