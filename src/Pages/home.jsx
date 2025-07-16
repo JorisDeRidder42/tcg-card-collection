@@ -72,7 +72,12 @@ useEffect(() => {
   return (
     <>
     <h1 className="text-4xl font-bold text-center mb-6"></h1>{authenticated ? <p className='text-center'>You are logged in.</p> : <p className='text-center'>You are NOT logged in.</p>}
-    <button onClick={handleLogout}>Logout</button>
+    
+    <div className='mb-3'>
+      <button className='mx-2' onClick={handleLogout}>Logout</button>
+      <button onClick={() => navigate('/saved')}>View Saved Cards</button>
+    </div>
+
     <div className="p-6 max-w-screen-xl mx-auto">
       {setsLoading ? (
         <p>Loading sets...</p>

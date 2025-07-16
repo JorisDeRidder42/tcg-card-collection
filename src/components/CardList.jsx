@@ -7,7 +7,7 @@ const CardList = ({ cards, onCardClick, isCardSaved }) => {
     <Container>
       <Row>
         {cards?.map((card) => (
-          <Col key={card.id} xs={12} sm={6} md={4} lg={3}>
+          <Col key={card.id} xs={12} sm={6} md={3} lg={2}>
             <div 
               onClick={() => onCardClick(card)} 
                style={{ cursor: 'pointer', marginTop: '12px' }}>

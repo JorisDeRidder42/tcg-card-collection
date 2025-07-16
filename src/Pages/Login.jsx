@@ -84,7 +84,7 @@ const Login = () => {
 
         <button
         type="button"
-        className="btn btn-light mt-2 w-100"
+        className="btn btn-dark mt-2 w-100"
         onClick={handleGoogleSignIn}
       >
         Sign in with Google 
