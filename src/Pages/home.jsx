@@ -10,7 +10,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 
 const Home = () => {
-  const {authenticated, loading} = useAuth();
+  const {authenticated, user} = useAuth();
   const {logout } = useAuth();
   const navigate = useNavigate();
 
@@ -28,7 +28,6 @@ const Home = () => {
   const { data: cards, isLoading: cardsLoading } = useFetchList(selectedSetId ? `/cards?q=set.id:${selectedSetId}` : '');
 
   const newSets = sets?.data ? [...sets.data].sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)) : [];
-
 
   const handleLogout = () => {
     logout();
@@ -64,14 +63,20 @@ useEffect(() => {
 
   const isCardSaved = (cardId) => {
   const found = savedCards.some(card => card.id === cardId);
-  // console.log(`Checking if card ${cardId} saved:`, found);
   return found;
 }
 
 
   return (
     <>
-    <h1 className="text-4xl font-bold text-center mb-6"></h1>{authenticated ? <p className='text-center'>You are logged in.</p> : <p className='text-center'>You are NOT logged in.</p>}
+     <h1 className="text-xl text-center mb-6">
+        {authenticated ? `Welcome, ${user?.displayName || user?.email || 'User'}!` : 'Welcome!'}
+      </h1>
+      {authenticated ? (
+        <p className="text-center">Glad to see you back.</p>
+      ) : (
+        <p className="text-center">Please login first to see your collection.</p>
+      )}
     
     <div className='mb-3'>
       <button className='mx-2' onClick={handleLogout}>Logout</button>

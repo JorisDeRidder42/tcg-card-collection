@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
   const signIn = async (email, password) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const token = await userCredential.user.getIdToken(); // ✅ Correct way to get token
+    const token = await userCredential.user.getIdToken();
 
     localStorage.setItem('token', token);
     console.log('Auth Token:', token);

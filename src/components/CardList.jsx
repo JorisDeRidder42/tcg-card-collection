@@ -17,12 +17,14 @@ const CardList = ({ cards, onCardClick, isCardSaved }) => {
                     borderRadius: '12px',
                     padding: '6px',
                     transition: 'border 0.2s ease-in-out',
+                    overflow: 'hidden', // ensures image doesn't overflow on zoom
                   }}
                 >
                   <img
                     src={card.images.small}
                     alt={card.name}
-                    style={{ width: '100%', display: 'block', borderRadius: '8px' }}
+                    style={{ width: '100%', display: 'block', borderRadius: '8px', transition: 'transform 0.3s ease-in-out', }}
+                    className="hover-zoom"
                   />
                 </div>
               </div>

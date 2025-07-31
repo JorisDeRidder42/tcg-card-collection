@@ -1,6 +1,5 @@
 import Container from 'react-bootstrap/Container';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useAuth } from './Context/authContext';
 import Routing from '../src/Routing';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
