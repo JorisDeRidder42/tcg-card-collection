@@ -11,7 +11,10 @@ const SearchBar = ({ searchQuery, setSearchQuery }) => {
       <Form.Control
         type="text"
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={(e) => {
+          setSearchQuery(e.target.value);
+          setSearchParams({ set: selectedSetId, search: e.target.value });
+          }}
         placeholder="Search..."
         aria-label="Search"
       />

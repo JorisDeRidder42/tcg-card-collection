@@ -28,6 +28,7 @@ const Home = () => {
   const { data: cards, isLoading: cardsLoading } = useFetchList(selectedSetId ? `/cards?q=set.id:${selectedSetId}` : '');
 
   const newSets = sets?.data ? [...sets.data].sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)) : [];
+  
 
   const handleLogout = () => {
     logout();
@@ -41,25 +42,49 @@ const Home = () => {
 }, [newSets, selectedSetId]);
 
 useEffect(() => {
-    const setFromUrl = searchParams.get('set') || '';
-    const searchFromUrl = searchParams.get('search') || '';
+  // 1️⃣ Huidige waarden uit de URL lezen
+  const setFromUrl = searchParams.get('set') || '';
+  const searchFromUrl = searchParams.get('search') || '';
 
-    if (setFromUrl !== selectedSetId) setSelectedSetId(setFromUrl);
-    if (searchFromUrl !== searchQuery) setSearchQuery(searchFromUrl);
-  }, [searchParams]);
+  // 2️⃣ Als URL anders is dan state → state updaten
+  if (setFromUrl !== selectedSetId) {
+    setSelectedSetId(setFromUrl);
+  }
+  if (searchFromUrl !== searchQuery) {
+    setSearchQuery(searchFromUrl);
+  }
 
-  useEffect(() => {
-    const params = {};
-    if (selectedSetId) params.set = selectedSetId;
-    if (searchQuery) params.search = searchQuery;
+  // 3️⃣ Als state anders is dan URL → URL updaten
+  const params = {};
+  if (selectedSetId) params.set = selectedSetId;
+  if (searchQuery) params.search = searchQuery;
+
+  const currentParams = {};
+  for (const [key, value] of searchParams.entries()) {
+    currentParams[key] = value;
+  }
+
+  // Alleen updaten als er daadwerkelijk verschil is
+  if (
+    JSON.stringify(params) !== JSON.stringify(currentParams)
+  ) {
     setSearchParams(params);
-  }, [selectedSetId, searchQuery, setSearchParams]);
+  }
+}, [searchParams, selectedSetId, searchQuery, setSearchParams]);
 
 
-  // Filter cards based on the search query
-  const filteredCards = cards?.data.filter((card) =>
-    card.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // ✅ Filter cards in memory
+const filteredCards = React.useMemo(() => {
+  if (!cards?.data) return [];
+
+  return cards.data.filter((card) => {
+    const matchesSearch = searchQuery
+      ? card.name.toLowerCase().includes(searchQuery.toLowerCase())
+      : true;
+    return matchesSearch;
+  });
+}, [cards, searchQuery]);
+
 
   const isCardSaved = (cardId) => {
   const found = savedCards.some(card => card.id === cardId);
@@ -102,6 +127,7 @@ useEffect(() => {
       cards={filteredCards} 
       onCardClick={toggleSaveCard} 
       isCardSaved={isCardSaved} 
+      selectedCardId={selectedSetId}
     />
       )}
     </div>
