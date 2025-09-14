@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, { useState, useEffect, useContext, createContext, useMemo } from 'react';
 import { auth, db } from '../config/firebase';
 import {
   createUserWithEmailAndPassword,
@@ -78,36 +78,45 @@ export const AuthProvider = ({ children }) => {
   }
   };
 
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        setUser(firebaseUser);
-        setAuthenticated(true);
-        const snapshot = await getDocs(collection(db, "users", firebaseUser.uid, "savedCards"));
-        const cards = snapshot.docs.map(doc => doc.data());
-        setSavedCards(cards);
-      } else {
-        setUser(null);
-        setAuthenticated(false);
-        setSavedCards([]);
-      }
-      setLoading(false);
-    });
+ useEffect(() => {
+  let isMounted = true;
 
-    return () => unsub();
-  }, []);
+  const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
+    if (!isMounted) return;
 
-  const value = {
-    logout,
-    authenticated,
-    loading,
-    signUp,
-    signIn,
-    googleSignIn,
-    savedCards,
-    toggleSaveCard,
-    user
+    if (firebaseUser) {
+      setUser(firebaseUser);
+      setAuthenticated(true);
+      const snapshot = await getDocs(collection(db, "users", firebaseUser.uid, "savedCards"));
+      const cards = snapshot.docs.map(doc => doc.data());
+      setSavedCards(cards);
+    } else {
+      setUser(null);
+      setAuthenticated(false);
+      setSavedCards([]);
+    }
+    setLoading(false);
+  });
+
+  return () => {
+    isMounted = false;
+    unsub();
   };
+}, []);
+
+
+const value = useMemo(() => ({
+  logout,
+  authenticated,
+  loading,
+  signUp,
+  signIn,
+  googleSignIn,
+  savedCards,
+  toggleSaveCard,
+  user
+}), [authenticated, loading, savedCards, user]);
+
 
   return (
     <AuthContext.Provider value={value}>
