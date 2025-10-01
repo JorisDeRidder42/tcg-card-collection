@@ -4,6 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 
 const client = axios.create({
     baseURL: import.meta.env.VITE_APP_BASE_URL,
+    headers: {
+      "X-Api-Key": import.meta.env.VITE_APP_API_KEY,
+    },
 })
 
 /**
@@ -22,11 +25,12 @@ const getItemById = (endpoint, id) => client.get(`${endpoint}/${id}`);
 // Custom hook to fetch a list of items (e.g., sets or cards)
 export const useFetchList = (endpoint) => {
   return useQuery({
-    queryKey: [endpoint],
+    queryKey: ['fetchList',endpoint],
     queryFn: async () => {
       const response = await getItems(endpoint);
       return response.data;
     },
+    enabled: !!endpoint,  // ✅ prevents execution when endpoint is null
     staleTime: Infinity,
     cacheTime: Infinity,
   });

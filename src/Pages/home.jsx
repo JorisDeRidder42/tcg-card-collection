@@ -75,7 +75,7 @@ const newSets = useMemo(() => {
 
     <div className="p-6 max-w-screen-xl mx-auto">
       {setsLoading ? (
-        <p>Loading sets...</p>
+        <p>Loading sets, please wait...</p>
       ) : (
           <SetSelection
           sets={newSets}

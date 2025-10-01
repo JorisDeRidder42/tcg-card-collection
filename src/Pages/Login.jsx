@@ -9,7 +9,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [loggedInMsg, setLoggedInMsg] = useState('');
 
-  const { signIn, googleSignIn } = useAuth(); // assuming you have a login function in context
+  const { signIn, googleSignIn } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
