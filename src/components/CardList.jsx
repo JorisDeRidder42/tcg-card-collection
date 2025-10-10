@@ -17,7 +17,6 @@ const CardList = ({ cards, onCardClick, selectedCardId  }) => {
                   marginTop: '12px',
                   border: isSelected ? '3px solid #ffff00ff' : '3px solid transparent',
                   borderRadius: '8px',
-                  boxShadow: isSelected ? '0 0 12px rgba(255, 242, 0, 0.5)' : 'none',
                   transition: 'all 0.3s ease-in-out',
                   padding: '4px'
                 }}
@@ -32,7 +31,6 @@ const CardList = ({ cards, onCardClick, selectedCardId  }) => {
                       borderRadius: '8px',
                       transition: 'transform 0.3s ease-in-out'
                     }}
-                    className="hover-zoom"
                   />
                 </div>
               </div>

@@ -1,46 +1,41 @@
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
 
-
+// Axios client setup
 const client = axios.create({
-    baseURL: import.meta.env.VITE_APP_BASE_URL,
-    headers: {
-      "X-Api-Key": import.meta.env.VITE_APP_API_KEY,
-    },
-})
+  baseURL: import.meta.env.VITE_APP_BASE_URL,
+  headers: {
+    'X-Api-Key': import.meta.env.VITE_APP_API_KEY,
+  },
+});
 
-/**
- * @param {string} endpoint
- * @param {string} query
- */
+// Generic function to fetch a list of items
 const getItems = (endpoint) => client.get(endpoint);
 
-/**
- * @param {string} endpoint
- * @param {number} id 
- */
-
+// Generic function to fetch a single item by ID
 const getItemById = (endpoint, id) => client.get(`${endpoint}/${id}`);
 
-// Custom hook to fetch a list of items (e.g., sets or cards)
+/**
+ * Custom hook to fetch a list of items (e.g., sets or cards)
+ * @param {string} endpoint
+ */
 export const useFetchList = (endpoint) => {
   return useQuery({
-    queryKey: ['fetchList',endpoint],
+    queryKey: ['fetchList', endpoint],
     queryFn: async () => {
       const response = await getItems(endpoint);
       return response.data;
     },
-    enabled: !!endpoint,  // ✅ prevents execution when endpoint is null
+    enabled: !!endpoint, // Only run if endpoint exists
     staleTime: Infinity,
     cacheTime: Infinity,
   });
 };
 
 /**
- * Custom hook to fetch a single item by ID (e.g., a specific card)
- * @param {string} endpoint - API endpoint
- * @param {string|number} id - Item ID
- * @returns {object} - React Query result
+ * Custom hook to fetch a single item by ID
+ * @param {string} endpoint
+ * @param {string|number} id
  */
 export const useFetchById = (endpoint, id) => {
   return useQuery({
@@ -54,3 +49,5 @@ export const useFetchById = (endpoint, id) => {
     cacheTime: Infinity,
   });
 };
+
+export default client;

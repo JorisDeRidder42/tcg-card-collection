@@ -8,121 +8,113 @@ import {
   GoogleAuthProvider,
   signOut
 } from 'firebase/auth';
-import { doc, setDoc, deleteDoc, getDocs, collection } from "firebase/firestore";
+import { doc, setDoc, deleteDoc, getDocs, collection } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 
-// Create a new context
 const AuthContext = createContext();
 
-// ✅ Fixed useAuth hook
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export const useAuth = () => useContext(AuthContext);
 
-// AuthProvider component
 export const AuthProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [savedCards, setSavedCards] = useState([]);
 
-  const signUp = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
-  };
+  // Authentication methods
+  const signUp = (email, password) => createUserWithEmailAndPassword(auth, email, password);
 
   const signIn = async (email, password) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const token = await userCredential.user.getIdToken();
-
     localStorage.setItem('token', token);
-    console.log('Auth Token:', token);
-
     return userCredential;
   };
 
-  const googleSignIn = () => {
-    const provider = new GoogleAuthProvider();
-    return signInWithPopup(auth, provider);
-  };
+  const googleSignIn = () => signInWithPopup(auth, new GoogleAuthProvider());
 
   const logout = async () => {
     try {
       await signOut(auth);
       localStorage.removeItem('token');
-      setAuthenticated(false); 
+      setAuthenticated(false);
+      setUser(null);
+      setSavedCards([]);
     } catch (err) {
       console.error('Logout failed:', err);
+      toast.error('Logout failed. Try again.');
     }
   };
 
+  // Save / Remove card
   const toggleSaveCard = async (card) => {
-    console.log('its called');
     if (!user) return;
 
-    const cardRef = doc(db, "users", user.uid, "savedCards", card.id);
-    const isSaved = savedCards.find(c => c.id === card.id);
+    const cardRef = doc(db, 'users', user.uid, 'savedCards', card.id);
+    const isSaved = savedCards.some(c => c.id === card.id);
 
     try {
-    if (isSaved) {
-      await deleteDoc(cardRef);
-      setSavedCards(prev => prev.filter(c => c.id !== card.id));
-      toast.info(`${card.name} removed from saved cards.`);
-    } else {
-      await setDoc(cardRef, card);
-      setSavedCards(prev => [...prev, card]);
-      toast.success(`${card.name} added to saved cards!`);
+      if (isSaved) {
+        await deleteDoc(cardRef);
+        setSavedCards(prev => prev.filter(c => c.id !== card.id));
+        toast.info(`${card.name} removed from saved cards.`);
+      } else {
+        await setDoc(cardRef, card);
+        setSavedCards(prev => [...prev, card]);
+        toast.success(`${card.name} added to saved cards!`);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Oops, something went wrong.');
     }
-  } catch (error) {
-    toast.error('Oops, something went wrong.');
-    console.error(error);
-  }
   };
 
- useEffect(() => {
-  let isMounted = true;
+  // Listen to auth state
+  useEffect(() => {
+    let isMounted = true;
 
-  const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
-    if (!isMounted) return;
+    const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (!isMounted) return;
 
-    if (firebaseUser) {
-      setUser(firebaseUser);
-      setAuthenticated(true);
-      const snapshot = await getDocs(collection(db, "users", firebaseUser.uid, "savedCards"));
-      const cards = snapshot.docs.map(doc => doc.data());
-      setSavedCards(cards);
-    } else {
-      setUser(null);
-      setAuthenticated(false);
-      setSavedCards([]);
-    }
-    setLoading(false);
-  });
+      if (firebaseUser) {
+        setUser(firebaseUser);
+        setAuthenticated(true);
 
-  return () => {
-    isMounted = false;
-    unsub();
-  };
-}, []);
+        try {
+          const snapshot = await getDocs(collection(db, 'users', firebaseUser.uid, 'savedCards'));
+          const cards = snapshot.docs.map(doc => doc.data());
+          setSavedCards(cards);
+        } catch (err) {
+          console.error('Failed to fetch saved cards:', err);
+        }
+      } else {
+        setUser(null);
+        setAuthenticated(false);
+        setSavedCards([]);
+      }
 
+      setLoading(false);
+    });
 
-const value = useMemo(() => ({
-  logout,
-  authenticated,
-  loading,
-  signUp,
-  signIn,
-  googleSignIn,
-  savedCards,
-  toggleSaveCard,
-  user
-}), [authenticated, loading, savedCards, user]);
+    return () => {
+      isMounted = false;
+      unsub();
+    };
+  }, []);
 
+  const value = useMemo(() => ({
+    authenticated,
+    loading,
+    user,
+    savedCards,
+    signUp,
+    signIn,
+    googleSignIn,
+    logout,
+    toggleSaveCard,
+  }), [authenticated, loading, user, savedCards]);
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export default AuthContext;

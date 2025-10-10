@@ -1,11 +1,12 @@
-import { Navigate } from "react-router-dom";
-import { useAuth } from "../Context/authContext";
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../Context/authContext';
 
-export const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children }) => {
   const { authenticated, loading } = useAuth();
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p className="text-center mt-5">Loading...</p>; // styled for better UX
   }
 
   if (!authenticated) {
@@ -14,3 +15,5 @@ export const ProtectedRoute = ({ children }) => {
 
   return children;
 };
+
+export default ProtectedRoute;

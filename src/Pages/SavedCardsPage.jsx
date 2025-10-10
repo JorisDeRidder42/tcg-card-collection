@@ -7,19 +7,18 @@ const SavedCardsPage = () => {
   const { savedCards, toggleSaveCard } = useAuth();
   const navigate = useNavigate();
 
-  const isCardSaved = (cardId) => {
-    return savedCards.some(card => card.id === cardId);
-  };
+  const isCardSaved = (cardId) => savedCards.some(card => card.id === cardId);
 
   return (
     <div className="p-6 max-w-screen-xl mx-auto">
-         <button 
-        onClick={() => navigate('/')}>
+         <button className="btn btn-secondary mb-4" onClick={() => navigate('/')}>
         Back to Home
       </button>
+
       <h1 className="text-3xl font-bold mb-6">Your Saved Cards</h1>
+
       {savedCards.length === 0 ? (
-        <p>You haven't saved any cards yet.</p>
+        <p className='text-center'>You haven't saved any cards yet.</p>
       ) : (
         <CardList 
           cards={savedCards} 

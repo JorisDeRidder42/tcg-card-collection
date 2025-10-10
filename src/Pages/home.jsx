@@ -10,94 +10,88 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 
 const Home = () => {
-  const {authenticated, user} = useAuth();
-  const {logout } = useAuth();
+  const {authenticated, user, logout, toggleSaveCard, savedCards} = useAuth();
   const navigate = useNavigate();
-
   const [searchParams, setSearchParams] = useSearchParams();
+
+    // Initial values from URL
   const initialSetId = searchParams.get('set') || '';
   const initialSearchQuery = searchParams.get('search') || '';
-
-  const {toggleSaveCard, savedCards} = useAuth();
 
   const [selectedSetId, setSelectedSetId] = React.useState(initialSetId);
   const [searchQuery, setSearchQuery] = React.useState(initialSearchQuery);
 
-
   const { data: sets, isLoading: setsLoading } = useFetchList('/sets');
   const { data: cards, isLoading: cardsLoading } = useFetchList(selectedSetId ? `/cards?q=set.id:${selectedSetId}` : null);
-  
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
+  // Sort sets and pick first set if nothing is selected
+const newSets = useMemo(() => {
+  if (!sets?.data) return [];
+
+  const sorted = [...sets.data].sort(
+    (a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)
+  );
+
+  // Automatically select the first set only if nothing is selected yet
+  if (!selectedSetId && sorted.length > 0) {
+    setSelectedSetId(sorted[0].id);
+  }
+  return sorted;
+}, [sets?.data, selectedSetId]);
 
 useEffect(() => {
   const params = {};
   if (selectedSetId) params.set = selectedSetId;
   if (searchQuery) params.search = searchQuery;
-  
-
   setSearchParams(params);
 }, [selectedSetId, searchQuery, setSearchParams]);
 
-
-  // ✅ Filter cards in memory
+  // Filter cards in memory
 const filteredCards = React.useMemo(() => {
   if (!cards?.data) return [];
   return cards.data.filter(card => searchQuery ? card.name.toLowerCase().includes(searchQuery.toLowerCase()) : true);
 }, [cards, searchQuery]);
 
-  const isCardSaved = (cardId) => {
-  const found = savedCards.some(card => card.id === cardId);
-  return found;
-}
-const newSets = useMemo(() => {
-  return sets?.data ? [...sets.data].sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)) : [];
-}, [sets?.data]);
+  // Check if card is saved
+  const isCardSaved = (cardId) => savedCards.some((card) => card.id === cardId);
 
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
   return (
-    <>
-     <h1 className="text-xl text-center mb-6">
-        {authenticated ? `Welcome, ${user?.displayName || user?.email || 'User'}!` : 'Welcome!'}
-      </h1>
-      {authenticated ? (
-        <p className="text-center">Glad to see you back.</p>
-      ) : (
-        <p className="text-center">Please login first to see your collection.</p>
-      )}
-    
-    <div className='mb-3'>
-      <button className='mx-2' onClick={handleLogout}>Logout</button>
-      <button onClick={() => navigate('/saved')}>View Saved Cards</button>
-    </div>
-
-    <div className="p-6 max-w-screen-xl mx-auto">
-      {setsLoading ? (
-        <p>Loading sets, please wait...</p>
-      ) : (
-          <SetSelection
-          sets={newSets}
+    <div className='container py-4 max-w-screen-xl mx-auto'>
+      <h1 className="text-xl text-center mb-3">
+          {authenticated ? `Welcome, ${user?.displayName || user?.email || 'User'}!` : 'Welcome!'}
+        </h1>
+      <p className='text-center mb-4'> 
+        {authenticated ? 'Glad to see you back.' : 'Please login first to see your collection.'}
+      </p>
+      
+      <div className='mb-3 d-flex gap-2 justify-content-center'>
+        <button className='btn btn-danger' onClick={handleLogout}>Logout</button>
+        <button className='btn btn-primary' onClick={() => navigate('/saved')}>View Saved Cards</button>
+      </div>
+     {/* Set selection*/}
+    {setsLoading ? (<p>Loading sets...</p>) : (
+        <SetSelection
+          sets={sortedSets}
           selectedSetId={selectedSetId}
           setSelectedSetId={setSelectedSetId}
-          />
+        />
       )}
+      {/* Search bar */}
       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
-      {cardsLoading ? (
-        <SkeletonCards/>
-      ) : (
-        <CardList 
-      cards={filteredCards} 
-      onCardClick={toggleSaveCard} 
-      isCardSaved={isCardSaved} 
-      selectedCardId={selectedSetId}
-    />
-      )}
-    </div>
-        </>
+      {/* Cards */}
+      {cardsLoading ? (<SkeletonCards />) : (
+        <CardList
+          cards={filteredCards}
+          onCardClick={toggleSaveCard}
+          isCardSaved={isCardSaved}
+        />
+        )}
+      </div>
   );
-};
-
+}
 export default Home;

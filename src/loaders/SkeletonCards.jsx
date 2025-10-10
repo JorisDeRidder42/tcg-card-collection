@@ -1,8 +1,8 @@
-import React from "react";
-import { Container, Row, Col, Placeholder } from "react-bootstrap";
+import React from 'react';
+import { Container, Row, Col, Placeholder } from 'react-bootstrap';
 
-const SkeletonCards = () => {
-  const skeletons = Array.from({ length: 20 }); // Adjust number of skeletons
+const SkeletonCards = ({ count = 20 }) => {
+  const skeletons = Array.from({ length: count });
 
   return (
     <Container className="py-4">
@@ -13,9 +13,9 @@ const SkeletonCards = () => {
               <Placeholder
                 xs={12}
                 style={{
-                  height: "400px",
-                  borderRadius: "1em",
-                  display: "block",
+                  height: '400px',
+                  borderRadius: '1rem',
+                  display: 'block',
                 }}
               />
             </Placeholder>
