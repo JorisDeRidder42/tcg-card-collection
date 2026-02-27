@@ -1,7 +1,6 @@
-import React, { use, useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import {useFetchList} from '../Hooks/dataHooks';
 import SkeletonCards from '../loaders/SkeletonCards';
-
 import SetSelection from '../components/SetSelecction';
 import CardList from '../components/CardList';
 import SearchBar from '../components/SearchBar';
@@ -40,11 +39,12 @@ const newSets = useMemo(() => {
 }, [sets?.data, selectedSetId]);
 
 useEffect(() => {
+  console.log('sets data recieved:', sets)
   const params = {};
   if (selectedSetId) params.set = selectedSetId;
   if (searchQuery) params.search = searchQuery;
   setSearchParams(params);
-}, [selectedSetId, searchQuery, setSearchParams]);
+}, [selectedSetId, searchQuery, setSearchParams, sets]);
 
   // Filter cards in memory
 const filteredCards = React.useMemo(() => {
@@ -73,9 +73,9 @@ const filteredCards = React.useMemo(() => {
         <button className='btn btn-primary' onClick={() => navigate('/saved')}>View Saved Cards</button>
       </div>
      {/* Set selection*/}
-    {setsLoading ? (<p>Loading sets...</p>) : (
+    {setsLoading ? ( <p>Loading sets... </p>) : (
         <SetSelection
-          sets={sortedSets}
+          sets={newSets}
           selectedSetId={selectedSetId}
           setSelectedSetId={setSelectedSetId}
         />

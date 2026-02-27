@@ -10,10 +10,11 @@ export default defineConfig({
   server: {
   proxy: {
     '/api': {
-      target: 'https://api.pokemontcg.io/v2',
+      target: 'https://api.pokemontcg.io',
       changeOrigin: true,
-      rewrite: (path) => path.replace(/^\/api/, '')
+      secure: true,
+      rewrite: path => path.replace(/^\/api/, '')
+      }
     }
-  }
   },
 })

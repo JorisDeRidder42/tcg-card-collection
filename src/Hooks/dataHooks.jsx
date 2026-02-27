@@ -24,6 +24,7 @@ export const useFetchList = (endpoint) => {
     queryKey: ['fetchList', endpoint],
     queryFn: async () => {
       const response = await getItems(endpoint);
+      console.log('Axios response:', response);
       return response.data;
     },
     enabled: !!endpoint, // Only run if endpoint exists
