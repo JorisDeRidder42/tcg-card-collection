@@ -38,20 +38,20 @@ const CardList = ({ cards, onCardClick, selectedCardId, isCardSaved }) => {
                 {saved && (
                   <div
                     style={{
-                      position: 'absolute',
-                      top: '4px',
-                      right: '4px',
-                      width: '20px',
-                      height: '20px',
+                     position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      width: '28px',
+                      height: '28px',
                       borderRadius: '50%',
-                      backgroundColor: '#00ff00',
+                      backgroundColor: 'rgba(0, 188, 0, 0.8)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       color: 'white',
-                      fontSize: '12px',
                       fontWeight: 'bold',
-                      pointerEvents: 'none',
+                      fontSize: '14px',
+                      pointerEvents: 'none'
                     }}
                   >
                     ✓

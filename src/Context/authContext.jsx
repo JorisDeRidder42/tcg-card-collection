@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   const [savedCards, setSavedCards] = useState([]);
 
   // Authentication methods
-  const signUp = (email, password) => createUserWithEmailAndPassword(auth, email, password);
+  // const signUp = (email, password) => createUserWithEmailAndPassword(auth, email, password);
 
   const signIn = async (email, password) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -107,7 +107,7 @@ export const AuthProvider = ({ children }) => {
     loading,
     user,
     savedCards,
-    signUp,
+    // signUp,
     signIn,
     googleSignIn,
     logout,
