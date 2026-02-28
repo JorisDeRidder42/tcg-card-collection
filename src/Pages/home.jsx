@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import {useFetchList} from '../Hooks/dataHooks';
+import {useFetchList} from '../hooks/useDataHook';
 import SkeletonCards from '../loaders/SkeletonCards';
 import SetSelection from '../components/SetSelecction';
 import CardList from '../components/CardList';
@@ -19,27 +19,25 @@ const Home = () => {
 
   const [selectedSetId, setSelectedSetId] = React.useState(initialSetId);
   const [searchQuery, setSearchQuery] = React.useState(initialSearchQuery);
+  const [selectedCardId, setSelectedCardId] = React.useState(null);
 
   const { data: sets, isLoading: setsLoading } = useFetchList('/sets');
-  const { data: cards, isLoading: cardsLoading } = useFetchList(selectedSetId ? `/cards?q=set.id:${selectedSetId}` : null);
+  const { data: cards, isLoading: cardsLoading } = useFetchList(selectedSetId ? `/cards?set.id=${selectedSetId}` : null);
 
   // Sort sets and pick first set if nothing is selected
 const newSets = useMemo(() => {
-  if (!sets?.data) return [];
+  if (!sets) return [];
 
-  const sorted = [...sets.data].sort(
-    (a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)
-  );
+  const sorted = [...sets].reverse();
 
   // Automatically select the first set only if nothing is selected yet
   if (!selectedSetId && sorted.length > 0) {
     setSelectedSetId(sorted[0].id);
   }
   return sorted;
-}, [sets?.data, selectedSetId]);
+}, [sets, selectedSetId]);
 
 useEffect(() => {
-  console.log('sets data recieved:', sets)
   const params = {};
   if (selectedSetId) params.set = selectedSetId;
   if (searchQuery) params.search = searchQuery;
@@ -47,10 +45,11 @@ useEffect(() => {
 }, [selectedSetId, searchQuery, setSearchParams, sets]);
 
   // Filter cards in memory
-const filteredCards = React.useMemo(() => {
-  if (!cards?.data) return [];
-  return cards.data.filter(card => searchQuery ? card.name.toLowerCase().includes(searchQuery.toLowerCase()) : true);
+const filteredCards = useMemo(() => {
+  if (!cards) return [];
+  return cards.filter(card => searchQuery ? card.name.toLowerCase().includes(searchQuery.toLowerCase()) : true);
 }, [cards, searchQuery]);
+
 
   // Check if card is saved
   const isCardSaved = (cardId) => savedCards.some((card) => card.id === cardId);
@@ -59,6 +58,7 @@ const filteredCards = React.useMemo(() => {
     logout();
     navigate('/login');
   };
+  
   return (
     <div className='container py-4 max-w-screen-xl mx-auto'>
       <h1 className="text-xl text-center mb-3">
@@ -86,9 +86,14 @@ const filteredCards = React.useMemo(() => {
       {/* Cards */}
       {cardsLoading ? (<SkeletonCards />) : (
         <CardList
-          cards={filteredCards}
-          onCardClick={toggleSaveCard}
+          cards={filteredCards}µ
+          selectedCardId={selectedCardId}
           isCardSaved={isCardSaved}
+
+          onCardClick={(card) => {
+            setSelectedCardId(card.id); //gele highlight
+            toggleSaveCard(card); /// saved status groen via Firestore
+          }}
         />
         )}
       </div>

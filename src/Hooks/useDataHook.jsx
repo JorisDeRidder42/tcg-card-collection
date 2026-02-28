@@ -4,9 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 // Axios client setup
 const client = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_URL,
-  headers: {
-    'X-Api-Key': import.meta.env.VITE_APP_API_KEY,
-  },
 });
 
 // Generic function to fetch a list of items
@@ -24,7 +21,6 @@ export const useFetchList = (endpoint) => {
     queryKey: ['fetchList', endpoint],
     queryFn: async () => {
       const response = await getItems(endpoint);
-      console.log('Axios response:', response);
       return response.data;
     },
     enabled: !!endpoint, // Only run if endpoint exists
