@@ -6,36 +6,21 @@ import FormData from "form-data";
 import cors from "cors";
 
 const app = express();
-app.use(cors());
+const VITE_APP_BASE_URL = import.meta.env.VITE_APP_BASE_URL;
+const VITE_APP_API_KEY = import.meta.env.VITE_APP_API_KEY;
 
-const upload = multer({ dest: "uploads/" });
-
-const API_KEY = "86b1277c-f047-477a-9d6e-cdd72694f9c7";
-
-app.post("/api/scan", upload.single("image"), async (req, res) => {
+app.get('/api/sets', async (req, res) => {
+  res.json({working : true});
   try {
-    const imagePath = req.file.path;
+    const response = await fetch(`${VITE_APP_BASE_URL}/sets`, {
+      headers: { 'X-Api-Key': VITE_APP_API_KEY }
+    });
 
-    const formData = new FormData();
-    formData.append("image", fs.createReadStream(imagePath));
-
-    const response = await fetch(
-      "https://api.tcgdex.net/v2/en/cards/search",
-      {
-        method: "POST",
-        headers: {
-          "X-Api-Key": API_KEY,
-        },
-        body: formData,
-      }
-    );
-
-    const result = await response.json();
-    res.json({ card: result.data?.[0] || null });
-
+    const data = await response.json();
+    res.json(data);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Scan failed" });
+    res.status(500).json({ error: 'Failed to fetch sets' });
   }
 });
 
