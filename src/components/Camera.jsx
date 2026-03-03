@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const Camera = ({ onCardDetected }) => {
   const [loading, setLoading] = useState(false);
@@ -16,6 +17,7 @@ const Camera = ({ onCardDetected }) => {
       method: "POST",
       body: formData,
     });
+    console.log('res', res);
 
     const data = await res.json();
     setLoading(false);

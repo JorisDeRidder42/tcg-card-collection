@@ -15,7 +15,7 @@ const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
     // Initial values from URL
-  const initialSetId = searchParams.get('set') || '';
+  const initialSetId = searchParams.get('sets') || '';
   const initialSearchQuery = searchParams.get('search') || '';
 
   const [selectedSetId, setSelectedSetId] = React.useState(initialSetId);
