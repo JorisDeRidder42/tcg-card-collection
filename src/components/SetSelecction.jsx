@@ -1,6 +1,5 @@
 // components/SetSelection.js
 import React from 'react';
-import { Form } from 'react-bootstrap';
 import Select from 'react-select';
 
 const SetSelection = ({ sets, selectedSetId, setSelectedSetId }) => {
@@ -12,7 +11,7 @@ const SetSelection = ({ sets, selectedSetId, setSelectedSetId }) => {
 
   const formatOptionLabel = ({ label, logo }) => (
     <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-      <img src={logo} alt={label} style={{ width: 100, height: "auto" }} />
+      <img src={logo} alt={label} style={{ width: 50, height: "auto" }} />
       <span>{label}</span>
     </div>
   );
