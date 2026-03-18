@@ -6,7 +6,6 @@ import CardList from '../components/CardList';
 import SearchBar from '../components/SearchBar';
 import { useAuth } from '../Context/authContext';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { BiCamera } from 'react-icons/bi';
 
 
 const Home = () => {
@@ -72,7 +71,6 @@ const filteredCards = useMemo(() => {
       <div className='mb-3 d-flex gap-2 justify-content-center'>
         <button className='btn btn-danger' onClick={handleLogout}>Logout</button>
         <button className='btn btn-primary' onClick={() => navigate('/saved')}>View Saved Cards</button>
-        <button className='btn btn-secondary' onClick={() => navigate('/camera')}><BiCamera/></button>
       </div>
      {/* Set selection*/}
     {setsLoading ? ( <p>Loading sets... </p>) : (
