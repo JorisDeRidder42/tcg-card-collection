@@ -6,6 +6,7 @@ import CardList from '../components/CardList';
 import SearchBar from '../components/SearchBar';
 import { useAuth } from '../Context/authContext';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useDebounce } from '../hooks/useDebounce';
 
 
 const Home = () => {
@@ -25,6 +26,9 @@ const Home = () => {
   const { data: sets, isLoading: setsLoading } = useFetchList('/sets');
   const { data: allCards, isLoading: allCardsLoading } = useFetchList('/cards');
   const { data: cards, isLoading: cardsLoading } = useFetchList(selectedSetId ? `/cards?set.id=${selectedSetId}` : null);
+
+    const debouncedSearch = useDebounce(searchQuery, 300);
+    console.log('debouncedSearch', debouncedSearch);
 
   // Sort sets and pick first set if nothing is selected
 const newSets = useMemo(() => {
@@ -49,19 +53,20 @@ useEffect(() => {
   // Filter cards in memory
 const filteredCards = useMemo(() => {
   const source = searchMode === "all" ? allCards : cards;
-  console.log("without image:", source.filter(c => !c.image).length);
 
   if (!source) return [];
 
-  if (!searchQuery) return source;
+  const query = debouncedSearch?.toLowerCase().trim();
 
-  const query = searchQuery.toLowerCase();
+  const filtered = query
+    ? source.filter(card =>
+        card.name.toLowerCase().includes(query) &&
+        card.image?.length > 0
+      )
+    : source.filter(card => card.image?.length > 0);
 
-  return source.filter(card =>
-    card.name.toLowerCase().includes(query) &&
-    card.image?.length > 0
-  ).slice(0, 50);
-}, [cards, allCards, searchQuery, searchMode]);
+  return filtered.slice(0, 100);
+}, [cards, allCards, searchMode, debouncedSearch]);
 
   // Check if card is saved
   const isCardSaved = (cardId) => savedCards.some((card) => card.id === cardId);
