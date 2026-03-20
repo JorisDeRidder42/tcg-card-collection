@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, InputGroup } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa'; // Icon library
 
-const SearchBar = ({ searchQuery, setSearchQuery }) => {
+const SearchBar = ({ searchQuery, setSearchQuery, selectedSetId, setSearchParams}) => {
   return (
     <InputGroup className="mt-3">
       <InputGroup.Text>

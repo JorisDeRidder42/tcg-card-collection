@@ -12,6 +12,7 @@ const Home = () => {
   const {authenticated, user, logout, toggleSaveCard, savedCards} = useAuth();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [searchMode, setSearchMode] = useState("set");
 
     // Initial values from URL
   const initialSetId = searchParams.get('sets') || '';
@@ -22,6 +23,7 @@ const Home = () => {
   const [selectedCardId, setSelectedCardId] = React.useState(null);
 
   const { data: sets, isLoading: setsLoading } = useFetchList('/sets');
+  const { data: allCards, isLoading: allCardsLoading } = useFetchList('/cards');
   const { data: cards, isLoading: cardsLoading } = useFetchList(selectedSetId ? `/cards?set.id=${selectedSetId}` : null);
 
   // Sort sets and pick first set if nothing is selected
@@ -42,14 +44,24 @@ useEffect(() => {
   if (selectedSetId) params.set = selectedSetId;
   if (searchQuery) params.search = searchQuery;
   setSearchParams(params);
-}, [selectedSetId, searchQuery, setSearchParams, sets]);
+}, [selectedSetId, searchQuery, setSearchParams]);
 
   // Filter cards in memory
 const filteredCards = useMemo(() => {
-  if (!cards) return [];
-  return cards.filter(card => searchQuery ? card.name.toLowerCase().includes(searchQuery.toLowerCase()) : true);
-}, [cards, searchQuery]);
+  const source = searchMode === "all" ? allCards : cards;
+  console.log("without image:", source.filter(c => !c.image).length);
 
+  if (!source) return [];
+
+  if (!searchQuery) return source;
+
+  const query = searchQuery.toLowerCase();
+
+  return source.filter(card =>
+    card.name.toLowerCase().includes(query) &&
+    card.image?.length > 0
+  ).slice(0, 50);
+}, [cards, allCards, searchQuery, searchMode]);
 
   // Check if card is saved
   const isCardSaved = (cardId) => savedCards.some((card) => card.id === cardId);
@@ -68,9 +80,24 @@ const filteredCards = useMemo(() => {
         {authenticated ? 'Glad to see you back.' : 'Please login first to see your collection.'}
       </p>
       
-      <div className='mb-3 d-flex gap-2 justify-content-center'>
+      <div className='mb-3 d-flex gap-2'>
         <button className='btn btn-danger' onClick={handleLogout}>Logout</button>
         <button className='btn btn-primary' onClick={() => navigate('/saved')}>View Saved Cards</button>
+        <div>
+  <button 
+    onClick={() => setSearchMode("set")}
+    style={{ fontWeight: searchMode === "set" ? "bold" : "normal" }}
+  >
+    Current Set
+  </button>
+
+  <button 
+    onClick={() => setSearchMode("all")}
+    style={{ fontWeight: searchMode === "all" ? "bold" : "normal" }}
+  >
+    All Cards
+  </button>
+  </div>
       </div>
      {/* Set selection*/}
     {setsLoading ? ( <p>Loading sets... </p>) : (
@@ -81,12 +108,12 @@ const filteredCards = useMemo(() => {
         />
       )}
       {/* Search bar */}
-      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} searchParams={searchParams} selectedSetId={selectedSetId} setSearchParams={setSearchParams} />
 
       {/* Cards */}
       {cardsLoading ? (<SkeletonCards />) : (
         <CardList
-          cards={filteredCards}µ
+          cards={filteredCards}
           selectedCardId={selectedCardId}
           isCardSaved={isCardSaved}
 
