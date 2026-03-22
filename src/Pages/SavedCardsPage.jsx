@@ -2,6 +2,7 @@ import React from 'react';
 import { useAuth } from '../Context/authContext';
 import CardList from '../components/CardList';
 import { useNavigate } from 'react-router-dom';
+import { FaHome } from "react-icons/fa";
 
 const SavedCardsPage = () => {
   const { savedCards, toggleSaveCard } = useAuth();
@@ -23,10 +24,9 @@ const SavedCardsPage = () => {
   return (
     <div className="p-6 max-w-screen-xl mx-auto">
          <button className="btn btn-secondary mb-4" onClick={() => navigate('/')}>
-        Back to Home
+        <FaHome />
       </button>
        <h5>You have <label className='text-danger'>{countCards}</label> saved cards.</h5>
-       {/* <h5>You have <label className='text-danger'>{holo}</label> holo cards.</h5> */}
 
       <h1 className="text-3xl font-bold mb-6">Your Saved Cards</h1>
 

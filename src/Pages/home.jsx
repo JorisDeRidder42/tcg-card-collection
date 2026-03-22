@@ -7,6 +7,8 @@ import SearchBar from '../components/SearchBar';
 import { useAuth } from '../Context/authContext';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useDebounce } from '../hooks/useDebounce';
+import { VscCollection } from "react-icons/vsc";
+import { CiLogout } from "react-icons/ci";
 
 
 const Home = () => {
@@ -86,20 +88,16 @@ const filteredCards = useMemo(() => {
       </p>
       
       <div className='mb-3 d-flex gap-2'>
-        <button className='btn btn-danger' onClick={handleLogout}>Logout</button>
-        <button className='btn btn-primary' onClick={() => navigate('/saved')}>View Saved Cards</button>
+        <button className='btn btn-danger' onClick={handleLogout}><CiLogout/></button>
+        <button className='btn btn-primary' onClick={() => navigate('/saved')}><VscCollection /></button>
         <div>
   <button 
-    onClick={() => setSearchMode("set")}
-    style={{ fontWeight: searchMode === "set" ? "bold" : "normal" }}
-  >
+    onClick={() => setSearchMode("set")}>
     Current Set
   </button>
 
   <button 
-    onClick={() => setSearchMode("all")}
-    style={{ fontWeight: searchMode === "all" ? "bold" : "normal" }}
-  >
+    onClick={() => setSearchMode("all")}>
     All Cards
   </button>
   </div>
@@ -123,7 +121,7 @@ const filteredCards = useMemo(() => {
           isCardSaved={isCardSaved}
 
           onCardClick={(card) => {
-            setSelectedCardId(card.id); //gele highlight
+            setSelectedCardId(card.id);
             toggleSaveCard(card); /// saved status groen via Firestore
           }}
         />
