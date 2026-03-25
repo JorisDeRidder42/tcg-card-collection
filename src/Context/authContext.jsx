@@ -8,12 +8,14 @@ import {
   GoogleAuthProvider,
   signOut
 } from 'firebase/auth';
-import { doc, setDoc, deleteDoc, getDocs, collection } from 'firebase/firestore';
+import { doc, setDoc, deleteDoc, getDocs, collection, updateDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
+  const navigate = useNavigate();
 
 export const AuthProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
@@ -69,6 +71,20 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+
+const clearCollection = async() => {
+  if(!user) return;
+
+  const colRef = collection(db, 'users', user.uid, 'savedCards');
+  const snapshot = await getDocs(colRef);
+  const batchDelete = snapshot.docs.map((d) => deleteDoc(doc(db, 'users', user.uid, 'savedCards', d.id)));
+ 
+  await Promise.all(batchDelete);
+  setSavedCards([]);
+  toast.success("Collection cleared!");
+  navigate('/');
+};
+
   // Listen to auth state
   useEffect(() => {
     let isMounted = true;
@@ -108,6 +124,7 @@ export const AuthProvider = ({ children }) => {
     user,
     savedCards,
     // signUp,
+    clearCollection,
     signIn,
     googleSignIn,
     logout,

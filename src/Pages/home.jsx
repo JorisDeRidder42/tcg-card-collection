@@ -9,6 +9,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useDebounce } from '../hooks/useDebounce';
 import { VscCollection } from "react-icons/vsc";
 import { CiLogout } from "react-icons/ci";
+import { ProgressBar } from 'react-bootstrap';
 
 
 const Home = () => {
@@ -26,24 +27,38 @@ const Home = () => {
   const [selectedCardId, setSelectedCardId] = React.useState(null);
 
   const { data: sets, isLoading: setsLoading } = useFetchList('/sets');
-  const { data: allCards, isLoading: allCardsLoading } = useFetchList('/cards');
+  const { data: allCards, isLoading: setIsLoading } = useFetchList('/cards');
   const { data: cards, isLoading: cardsLoading } = useFetchList(selectedSetId ? `/cards?set.id=${selectedSetId}` : null);
-
     const debouncedSearch = useDebounce(searchQuery, 300);
-    console.log('debouncedSearch', debouncedSearch);
 
-  // Sort sets and pick first set if nothing is selected
-const newSets = useMemo(() => {
-  if (!sets) return [];
+
+    //progressBar
+    const setProgress = useMemo(() => {
+      if(!cards?.length || !savedCards?.length) return { owned: 0, total: 0 };
+      
+      const total = cards.length;
+      const owned = cards.filter(card => savedCards.some(saved => saved.id === card.id)).length;
+
+      return {owned, total};
+    },[cards, savedCards]);
+
+    const progressPercentage = setProgress.total > 0 ? Math.round(setProgress.owned / setProgress.total * 100) : 0;
+
+useEffect(() => {
+  if (!sets) return;
 
   const sorted = [...sets].reverse();
 
-  // Automatically select the first set only if nothing is selected yet
   if (!selectedSetId && sorted.length > 0) {
     setSelectedSetId(sorted[0].id);
   }
-  return sorted;
 }, [sets, selectedSetId]);
+  // Sort sets and pick first set if nothing is selected
+  const newSets = useMemo(() => {
+  if (!sets) return [];
+
+  return [...sets].reverse();
+}, [sets]);
 
 useEffect(() => {
   const params = {};
@@ -57,18 +72,15 @@ const filteredCards = useMemo(() => {
   const source = searchMode === "all" ? allCards : cards;
 
   if (!source) return [];
+  const query = debouncedSearch?.trim().toLowerCase();
+  
+  if(!query) return source;
 
-  const query = debouncedSearch?.toLowerCase().trim();
-
-  const filtered = query
-    ? source.filter(card =>
-        card.name.toLowerCase().includes(query) &&
-        card.image?.length > 0
-      )
-    : source.filter(card => card.image?.length > 0);
-
-  return filtered.slice(0, 100);
+  return source.filter(card => card.name.toLowerCase().includes(query)
+  );
 }, [cards, allCards, searchMode, debouncedSearch]);
+
+
 
   // Check if card is saved
   const isCardSaved = (cardId) => savedCards.some((card) => card.id === cardId);
@@ -79,6 +91,7 @@ const filteredCards = useMemo(() => {
   };
   
   return (
+    
     <div className='container py-4 max-w-screen-xl mx-auto'>
       <h1 className="text-xl text-center mb-3">
           {authenticated ? `Welcome, ${user?.displayName || user?.email || 'User'}!` : 'Welcome!'}
@@ -86,6 +99,27 @@ const filteredCards = useMemo(() => {
       <p className='text-center mb-4'> 
         {authenticated ? 'Glad to see you back.' : 'Please login first to see your collection.'}
       </p>
+           <div className="mb-3">
+  <>
+    {setProgress.owned} / {setProgress.total} cards collected ({progressPercentage}%)
+    {console.log(setProgress)}
+  </>
+
+  <ProgressBar
+    now={progressPercentage}
+    label={`${progressPercentage}%`}
+    animated
+    striped
+    variant={
+      progressPercentage < 30
+        ? "danger"
+        : progressPercentage < 70
+        ? "warning"
+        : "success"
+    }
+    
+  />
+</div>
       
       <div className='mb-3 d-flex gap-2'>
         <button className='btn btn-danger' onClick={handleLogout}><CiLogout/></button>
@@ -101,6 +135,7 @@ const filteredCards = useMemo(() => {
     All Cards
   </button>
   </div>
+
       </div>
      {/* Set selection*/}
     {setsLoading ? ( <p>Loading sets... </p>) : (

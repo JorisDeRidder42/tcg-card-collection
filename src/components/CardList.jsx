@@ -2,6 +2,14 @@ import React from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 
 const CardList = ({ cards, onCardClick, selectedCardId, isCardSaved }) => {
+
+
+  const getImage = (card) => {
+    if(!card?.image) return '/placeholder.svg';
+    return `${card.image}/high.png`;
+  }
+
+
   return (
     <Container>
       <Row>
@@ -16,16 +24,15 @@ const CardList = ({ cards, onCardClick, selectedCardId, isCardSaved }) => {
                 style={{
                   cursor: 'pointer',
                   marginTop: '12px',
-                  border: isSelected ? '3px solid #ffff00' : '3px solid transparent',
-                  borderRadius: '8px',
                   transition: 'all 0.3s ease-in-out',
                   padding: '4px',
                   position: 'relative', // nodig voor vinkje overlay
                 }}
               >
                 <img
-                  src={card.image ? `${card.image}/low.webp` : '/placeholder.png'}
-                  alt={card.name}
+                  src={getImage(card)}
+                  alt={card.name} loading='lazy'
+                  onError={(e) => e.target.src = '/placeholder.svg'}
                   style={{
                     width: '100%',
                     display: 'block',
