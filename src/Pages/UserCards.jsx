@@ -3,6 +3,7 @@ import { useCollection } from './hooks/useCollection';
 
 const UserCards = () => {
   const {savedCards, toggleSaveCards, user } = useCollection();
+  console.log('savedCards', savedCards);
 
   if (!user) return <p className='text-center'>Please log in to save cards.</p>;
 

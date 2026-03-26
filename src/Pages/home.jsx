@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import {useFetchList} from '../hooks/useDataHook';
 import SkeletonCards from '../loaders/SkeletonCards';
 import SetSelection from '../components/SetSelecction';
@@ -10,10 +10,13 @@ import { useDebounce } from '../hooks/useDebounce';
 import { VscCollection } from "react-icons/vsc";
 import { CiLogout } from "react-icons/ci";
 import { ProgressBar } from 'react-bootstrap';
+import ScrollToTopButton from '../components/ScrollToTopButton';
 
 
 const Home = () => {
+  const containerRef = useRef(null);
   const {authenticated, user, logout, toggleSaveCard, savedCards} = useAuth();
+
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchMode, setSearchMode] = useState("set");
@@ -31,7 +34,6 @@ const Home = () => {
   const { data: cards, isLoading: cardsLoading } = useFetchList(selectedSetId ? `/cards?set.id=${selectedSetId}` : null);
     const debouncedSearch = useDebounce(searchQuery, 300);
 
-
     //progressBar
     const setProgress = useMemo(() => {
       if(!cards?.length || !savedCards?.length) return { owned: 0, total: 0 };
@@ -43,6 +45,14 @@ const Home = () => {
     },[cards, savedCards]);
 
     const progressPercentage = setProgress.total > 0 ? Math.round(setProgress.owned / setProgress.total * 100) : 0;
+
+      const progressVariant =
+      progressPercentage < 30
+    ? "danger"
+    : progressPercentage < 70
+    ? "warning"
+    : "success";
+
 
 useEffect(() => {
   if (!sets) return;
@@ -80,8 +90,6 @@ const filteredCards = useMemo(() => {
   );
 }, [cards, allCards, searchMode, debouncedSearch]);
 
-
-
   // Check if card is saved
   const isCardSaved = (cardId) => savedCards.some((card) => card.id === cardId);
 
@@ -92,7 +100,8 @@ const filteredCards = useMemo(() => {
   
   return (
     
-    <div className='container py-4 max-w-screen-xl mx-auto'>
+    
+  <div ref={containerRef} className='container py-4 max-w-screen-xl mx-auto'style={{ height: "100vh", overflowY: "auto" }}>
       <h1 className="text-xl text-center mb-3">
           {authenticated ? `Welcome, ${user?.displayName || user?.email || 'User'}!` : 'Welcome!'}
         </h1>
@@ -101,21 +110,16 @@ const filteredCards = useMemo(() => {
       </p>
            <div className="mb-3">
   <h5>
-    {setProgress.owned} / {setProgress.total} cards collected <span className='text-danger'>({progressPercentage}%)</span>
+    {setProgress.owned} / {setProgress.total} cards collected <span className={`text-${progressVariant}`}>({progressPercentage}%)</span>
   </h5>
+
 
   <ProgressBar
     now={progressPercentage}
     label={`${progressPercentage}%`}
     animated
     striped
-    variant={
-      progressPercentage < 30
-        ? "danger"
-        : progressPercentage < 70
-        ? "warning"
-        : "success"
-    }
+    variant={progressVariant}
     
   />
 </div>
@@ -134,8 +138,8 @@ const filteredCards = useMemo(() => {
     All Cards
   </button>
   </div>
-
-      </div>
+</div>
+<ScrollToTopButton containerRef={containerRef} />
      {/* Set selection*/}
     {setsLoading ? ( <p>Loading sets... </p>) : (
         <SetSelection
@@ -157,10 +161,15 @@ const filteredCards = useMemo(() => {
           onCardClick={(card) => {
             setSelectedCardId(card.id);
             toggleSaveCard(card); /// saved status groen via Firestore
+            console.log({
+  name: card.name,
+  id: card.id,
+  image: card.image
+});
           }}
         />
         )}
       </div>
   );
-}
+};
 export default Home;
