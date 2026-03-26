@@ -13,11 +13,11 @@ const SavedCardsPage = () => {
 
   return (
     <div className="p-6 max-w-screen-xl mx-auto">
-         <button className="btn btn-secondary mb-4" onClick={() => navigate('/')}>
+         <button className="btn btn-secondary m-2" onClick={() => navigate('/')}>
         <FaHome />
       </button>
       <button
-  className="btn btn-warning"
+  className="btn btn-danger"
   onClick={() => {
     if (window.confirm("Remove ALL cards from your collection?")) {
       clearCollection();

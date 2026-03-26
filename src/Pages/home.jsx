@@ -100,10 +100,9 @@ const filteredCards = useMemo(() => {
         {authenticated ? 'Glad to see you back.' : 'Please login first to see your collection.'}
       </p>
            <div className="mb-3">
-  <>
-    {setProgress.owned} / {setProgress.total} cards collected ({progressPercentage}%)
-    {console.log(setProgress)}
-  </>
+  <h5>
+    {setProgress.owned} / {setProgress.total} cards collected <span className='text-danger'>({progressPercentage}%)</span>
+  </h5>
 
   <ProgressBar
     now={progressPercentage}
@@ -123,14 +122,14 @@ const filteredCards = useMemo(() => {
       
       <div className='mb-3 d-flex gap-2'>
         <button className='btn btn-danger' onClick={handleLogout}><CiLogout/></button>
-        <button className='btn btn-primary' onClick={() => navigate('/saved')}><VscCollection /></button>
+        <button className='btn btn-secondary' onClick={() => navigate('/saved')}><VscCollection /></button>
         <div>
-  <button 
+  <button className='btn btn-primary m-1'
     onClick={() => setSearchMode("set")}>
     Current Set
   </button>
 
-  <button 
+  <button className='btn btn-primary m-1'
     onClick={() => setSearchMode("all")}>
     All Cards
   </button>

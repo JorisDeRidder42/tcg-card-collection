@@ -6,7 +6,7 @@ const CardList = ({ cards, onCardClick, selectedCardId, isCardSaved }) => {
 
   const getImage = (card) => {
     if(!card?.image) return '/placeholder.svg';
-    return `${card.image}/high.png`;
+    return `${card.image}/low.png`;
   }
 
 
