@@ -84,7 +84,7 @@ const Login = () => {
 
         <button
         type="button"
-        className="btn btn-dark mt-2 w-100 d-flex justify-content-center align-items-center"
+        className="btn btn-light mt-2 w-100 d-flex justify-content-center align-items-center"
         onClick={handleGoogleSignIn}
       >
         Sign in with Google 

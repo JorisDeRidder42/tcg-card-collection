@@ -4,6 +4,7 @@ import Fault from './pages/fault';
 import Home from './pages/Home';
 import Login from './Pages/Login';  
 import SavedCardsPage from './pages/SavedCardsPage';
+import CardDetail from './components/CardDetail';
 
 const Routing = () => {
     return (
@@ -14,6 +15,7 @@ const Routing = () => {
             </ProtectedRoute>
           }
         />
+            <Route path={'/card/:id'} element={<CardDetail/>}/>
             <Route path={'/login'} element={<Login/>}/>
             <Route path={'/saved'} element={<SavedCardsPage/>}/>
             <Route path={'*'} element={<Fault/>}/>

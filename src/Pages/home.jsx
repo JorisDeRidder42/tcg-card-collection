@@ -53,6 +53,9 @@ const Home = () => {
     ? "warning"
     : "success";
 
+useEffect(() => {
+  setSelectedCardId(null);
+}, [selectedSetId]);
 
 useEffect(() => {
   if (!sets) return;
@@ -115,10 +118,9 @@ const filteredCards = useMemo(() => {
 
 
   <ProgressBar
+    className='progress'
     now={progressPercentage}
     label={`${progressPercentage}%`}
-    animated
-    striped
     variant={progressVariant}
     
   />
@@ -155,18 +157,9 @@ const filteredCards = useMemo(() => {
       {cardsLoading ? (<SkeletonCards />) : (
         <CardList
           cards={filteredCards}
-          selectedCardId={selectedCardId}
           isCardSaved={isCardSaved}
-
-          onCardClick={(card) => {
-            setSelectedCardId(card.id);
-            toggleSaveCard(card); /// saved status groen via Firestore
-            console.log({
-  name: card.name,
-  id: card.id,
-  image: card.image
-});
-          }}
+          onCardClick={toggleSaveCard}
+          onCardDetailClick={(card) => navigate(`/card/${card.id}`) }
         />
         )}
       </div>

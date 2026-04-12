@@ -1,9 +1,167 @@
+/* CARDS */
+/* BUTTONS */
+/* LAYOUT */
+/* UTILITIES */
+
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-.hover-zoom:hover {
+.progress {
+  height: 3em;
+  border-radius: 1em;
+}
+.card-item {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-item.saved{
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
+}
+
+.card-item:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+/* IMAGE */
+.card-img {
+  width: 100%;
+  display: block;
+  border-radius: 10px;
+}
+
+/* OVERLAY */
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+  backdrop-filter: blur(1px);
+}
+
+.card-item:hover .card-overlay {
+  opacity: 1;
+}
+
+/* SAVE BUTTON */
+.save-btn {
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+}
+.save-btn.saved {
+  color: gold;
+  text-shadow: 0 0 8px gold;
+  animation: pop 0.2s ease;
+}
+
+.save-btn:not(.saved) {
+  color: #666;
+}
+
+.save-btn:hover {
+  transform: scale(1.15);
+  background: white;
+}
+
+.save-btn:active {
+  transform: scale(0.9);
+}
+
+/* SAVED CHECK (subtle) */
+.saved-check {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: limegreen;
+  color: white;
+  font-size: 12px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); }
+  100% { transform: scale(1); }
+  
+}
+
+
+.detail-page {
+  padding: 20px;
+  text-align: center;
+}
+
+/* BACK BUTTON */
+.back-btn {
+  margin-bottom: 20px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* CARD CONTAINER */
+.detail-card {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* IMAGE */
+.detail-image {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* TITLE */
+.detail-card h2 {
+  margin-top: 15px;
+}
+
+/* SET NAME */
+.set-name {
+  color: #666;
+  margin-bottom: 10px;
+}
+
+/* SAVE BUTTON */
+.save-detail-btn {
+  margin-top: 10px;
+  padding: 10px 16px;
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  background: #eee;
+}
+
+.save-detail-btn.saved {
+  background: gold;
+  color: black;
 }
