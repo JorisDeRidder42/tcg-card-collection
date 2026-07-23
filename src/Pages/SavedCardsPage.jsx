@@ -3,6 +3,7 @@ import { useAuth, } from '../Context/authContext';
 import CardList from '../components/CardList';
 import { useNavigate } from 'react-router-dom';
 import { FaHome } from "react-icons/fa";
+import { FaPrint } from "react-icons/fa6";
 
 const SavedCardsPage = () => {
   const { savedCards, toggleSaveCard, clearCollection} = useAuth();
@@ -10,6 +11,7 @@ const SavedCardsPage = () => {
   const countCards = savedCards.length;
 
   const isCardSaved = (cardId) => savedCards.some(card => card.id === cardId);
+  console.log("savedCards", savedCards);
 
   return (
     <div className="p-6 max-w-screen-xl mx-auto">
@@ -26,6 +28,7 @@ const SavedCardsPage = () => {
 >
   Clear Collection
 </button>
+<button className="btn btn-primary m-2" onClick={() => window.print()}><FaPrint /></button>
        <h5>You have <label className='text-danger'>{countCards}</label> saved cards.</h5>
 
       <h1 className="text-3xl font-bold mb-6">Your Saved Cards</h1>
