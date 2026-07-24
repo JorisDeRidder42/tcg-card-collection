@@ -20,16 +20,15 @@ const Home = () => {
   const navigate = useNavigate();
   const home = useHome();
   return (
-    
-    
   <div className='container py-4 max-w-screen-xl mx-auto'>
+
     <HomeHeader authenticated={authenticated} user={user}/>
 
     <ProgressSection  progress={home.progress} />
 
-<HomeActions navigate={navigate} user={user} logout={home.handleLogout} searchMode={home.searchMode} setSearchMode={home.setSearchMode}/>
+    <HomeActions navigate={navigate} user={user} logout={home.handleLogout} searchMode={home.searchMode} setSearchMode={home.setSearchMode}/>
 
-<ScrollToTopButton/>
+    <ScrollToTopButton/>
 
      {/* Set selection*/}
     {home.setsLoading ? ( <p>Loading sets... </p>) : (

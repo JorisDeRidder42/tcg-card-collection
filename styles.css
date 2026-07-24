@@ -191,3 +191,69 @@
   height: 50px;
   border-radius: 50%;
 }
+
+.card-item {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+
+
+.card-image {
+  width:100%;
+  aspect-ratio: 63 / 88;
+  object-fit: cover;
+  display:block;
+}
+
+
+.save-button {
+  position:absolute;
+  top:8px;
+  right:8px;
+
+  width:36px;
+  height:36px;
+
+  border-radius:50%;
+  border:none;
+
+  background:white;
+  color:#555;
+
+  font-size:22px;
+  font-weight:bold;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  box-shadow:0 2px 5px rgba(0,0,0,.3);
+}
+
+
+.save-button.owned {
+  background:#22c55e;
+  color:white;
+}
+
+
+.card-info {
+  padding:8px;
+  text-align:center;
+
+  display:flex;
+  flex-direction:column;
+}
+
+
+.card-info strong {
+  font-size:.9rem;
+}
+
+
+.card-info small {
+  color:#777;
+}
