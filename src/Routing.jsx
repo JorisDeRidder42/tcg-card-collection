@@ -4,7 +4,7 @@ import Fault from './pages/fault';
 import Home from './pages/Home';
 import Login from './Pages/Login';  
 import SavedCardsPage from './pages/SavedCardsPage';
-import CardDetail from './components/CardDetail';
+import CardDetail from './components/Card/CardDetail';
 
 const Routing = () => {
     return (

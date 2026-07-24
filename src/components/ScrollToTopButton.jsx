@@ -1,25 +1,23 @@
 import { useEffect, useState } from "react";
+import { FaArrowUp } from "react-icons/fa";
 
-const ScrollToTopButton = ({ containerRef }) => {
+const ScrollToTopButton = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
     const handleScroll = () => {
-      setVisible(container.scrollTop > 300);
+      setVisible(window.scrollY > 300);
     };
 
-    container.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
-    return () => container.removeEventListener("scroll", handleScroll);
-  }, [containerRef]);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollToTop = () => {
-    containerRef.current.scrollTo({
+    window.scrollTo({
       top: 0,
-      behavior: "smooth"
+      behavior: "smooth",
     });
   };
 
@@ -28,15 +26,9 @@ const ScrollToTopButton = ({ containerRef }) => {
   return (
     <button
       onClick={scrollToTop}
-      style={{
-        position: "fixed",
-        bottom: "20px",
-        right: "20px",
-        zIndex: 9999
-      }}
-      className="btn btn-primary"
+      className="scroll-top-btn"
     >
-      ↑
+      <FaArrowUp />
     </button>
   );
 };

@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
-    <Container>
+    <Container fluid="md">
       <h1 className="text-2xl text-center mt-5 font-bold">Pokémon Card Browser</h1>
       <Routing/>
        <ToastContainer 

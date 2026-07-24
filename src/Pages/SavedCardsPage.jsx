@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth, } from '../Context/authContext';
-import CardList from '../components/CardList';
+import CardList from '../components/Card/CardList';
 import { useNavigate } from 'react-router-dom';
 import { FaHome } from "react-icons/fa";
 import { FaPrint } from "react-icons/fa6";

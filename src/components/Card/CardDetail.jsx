@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useFetchList } from "../hooks/useDataHook";
-import { useAuth } from "../Context/authContext";
+import { useFetchList } from "../../hooks/useDataHook";
+import { useAuth } from "../../Context/authContext";
 
 const CardDetail = () => {
   const { id } = useParams();
