@@ -4,8 +4,10 @@ import { useFetchList } from "./useDataHook";
 import { useDebounce } from "./useDebounce";
 import { useAuth } from "../Context/authContext";
 
+const MAX_SETS = 12;
 const useHome = () => {
   const navigate = useNavigate();
+  const [showAllSets, setShowAllSets] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { authenticated, user, logout, toggleSaveCard, savedCards } = useAuth();
@@ -41,9 +43,16 @@ const useHome = () => {
     setSearchParams(params);
   }, [selectedSetId, searchQuery]);
 
-  const newSets = useMemo(() => {
-    return sets ? [...sets].reverse() : [];
-  }, [sets]);
+ const homeSets = useMemo(() => {
+  if (!sets) return [];
+
+  const sortedSets = [...sets].reverse();
+
+  return showAllSets
+    ? sortedSets
+    : sortedSets.slice(0, MAX_SETS);
+
+}, [sets, showAllSets]);
 
   const filteredCards = useMemo(() => {
     const source = searchMode === "all" ? allCards : cards;
@@ -104,7 +113,10 @@ const useHome = () => {
     setsLoading,
     cardsLoading,
 
-    newSets,
+    showAllSets,
+    setShowAllSets,
+    
+    homeSets,
     filteredCards,
 
     selectedSetId,

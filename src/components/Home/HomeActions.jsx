@@ -13,14 +13,12 @@ const HomeActions = ({
   return (
     <>
 
-      <div className="home-actions">
+      <div className="home-actions d-flex gap-2">
 
         {/* Iedereen krijgt collectie */}
         <button
-          className="btn btn-secondary flex-grow-1"
-          onClick={() => navigate('/saved')}
-        >
-          <VscCollection /> Collection
+          className="btn btn-secondary" onClick={() => navigate('/saved')}>
+           Collection <VscCollection />
         </button>
 
 
@@ -30,16 +28,10 @@ const HomeActions = ({
             className="btn btn-danger"
             onClick={logout}
           >
-            <CiLogout />
+           Logout <CiLogout />
           </button>
         )}
-
-      </div>
-
-
-      <div className="mode-buttons">
-
-        <button
+        {/* <button
           className={`btn ${
             searchMode === "set"
             ? "btn-primary"
@@ -48,10 +40,9 @@ const HomeActions = ({
           onClick={() => setSearchMode("set")}
         >
           Current Set
-        </button>
-
-
-        <button
+        </button> */}
+      </div>
+        {/* <button
           className={`btn ${
             searchMode === "all"
             ? "btn-primary"
@@ -60,11 +51,7 @@ const HomeActions = ({
           onClick={() => setSearchMode("all")}
         >
           All Cards
-        </button>
-
-      </div>
-
-
+        </button> */}
     </>
   );
 };

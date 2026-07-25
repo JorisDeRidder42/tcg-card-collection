@@ -3,7 +3,6 @@ import { Row, Col, Container } from 'react-bootstrap';
 import PokemonCard from './PokemonCard';
 
 const CardList = ({ cards, onCardClick, onCardDetailClick, isCardSaved }) => {
-  console.log("cards", cards);
     const getImage = (card) => {
     if(!card?.image) return '/placeholder.svg';
     return `${card.image}/low.png`;
