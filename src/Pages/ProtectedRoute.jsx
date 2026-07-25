@@ -6,7 +6,7 @@ const ProtectedRoute = ({ children }) => {
   const { authenticated, loading } = useAuth();
 
   if (loading) {
-    return <p className="text-center mt-5">Loading...</p>; // styled for better UX
+    return <h6 className="text-center mt-5">Loading...</h6>; // styled for better UX
   }
 
   if (!authenticated) {

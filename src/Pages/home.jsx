@@ -13,7 +13,7 @@ import HomeActions from '../components/Home/HomeActions';
 import HomeHeader from '../components/Home/HomeHeader';
 import ProgressSection from '../components/Home/ProgressSection';
 import useHome from '../hooks/useHome';
-import SetDashboard from '../components/Home/SetDashboard';
+import HomeDashboard from '../components/Home/HomeDashboard';
 
 const Home = () => {
 const { authenticated, user, toggleSaveCard, savedCards, logout, profile} = useAuth();
@@ -36,7 +36,7 @@ const { authenticated, user, toggleSaveCard, savedCards, logout, profile} = useA
         setSearchMode={home.setSearchMode}
       />
       {/* SETS BLOKKEN */}
-      <SetDashboard sets={home.homeSets} onSelectSet={home.setSelectedSetId} setShowAllSets={home.setShowAllSets} showAllSets={home.showAllSets}/>
+      <HomeDashboard sets={home.homeSets} onSelectSet={home.setSelectedSetId} setShowAllSets={home.setShowAllSets} showAllSets={home.showAllSets}/>
 
       {/* SET BLOKKEN
       <section className="mt-8">

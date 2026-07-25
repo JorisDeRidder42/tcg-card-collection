@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const SetDashboard = ({ sets, onSelectSet, showAllSets, setShowAllSets }) => {
+const navigate = useNavigate(); 
 const setColors = [
   "#ef4444",
   "#3b82f6",
@@ -26,7 +28,7 @@ const setColors = [
         {sets.map((set, index) => (
           <div
               key={set.id}
-              onClick={() => onSelectSet && onSelectSet(set.id)}
+              onClick={() => navigate(`/sets/${set.id}`)}
               className="set-card"
               style={{
                 background: `linear-gradient(

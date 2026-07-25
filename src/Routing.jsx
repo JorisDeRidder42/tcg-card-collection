@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Login from './Pages/Login';  
 import SavedCardsPage from './pages/SavedCardsPage';
 import CardDetail from './components/Card/CardDetail';
+import SetDetail from './pages/setDetail';
 
 const Routing = () => {
     return (
@@ -18,6 +19,7 @@ const Routing = () => {
             <Route path={'/card/:id'} element={<CardDetail/>}/>
             <Route path={'/login'} element={<Login/>}/>
             <Route path={'/saved'} element={<SavedCardsPage/>}/>
+            <Route path={'/sets/:setId'} element={<SetDetail/>}/>
             <Route path={'*'} element={<Fault/>}/>
         </Routes>
     )
