@@ -108,6 +108,7 @@ export const AuthProvider = ({ children }) => {
   // Save / remove card
   const toggleSaveCard = async(card)=>{
     if(!user) return;
+
     const cardRef = doc(
       db,
       'users',
@@ -131,21 +132,33 @@ export const AuthProvider = ({ children }) => {
           `${card.name} removed`
         );
       }else{
+        const savedCard = {
+          id: card.id,
+          name: card.name,
+          image: card.image,
+          localId: card.localId,
+          setId: card.setId,
+          setName: card.setName
+        };
+        console.log('saving card', savedCard);
+
         await setDoc(
           cardRef,
-          card
+          savedCard
         );
+
         setSavedCards(prev=>[
           ...prev,
-          card
+          savedCard
         ]);
         toast.success(
           `${card.name} saved!`
         );
       }
     }catch(error){
+      console.log('SavedCARd  error', error);
       toast.error(
-        "Something went wrong."
+        "Something went wrong.", error.message
       );
     }
   };

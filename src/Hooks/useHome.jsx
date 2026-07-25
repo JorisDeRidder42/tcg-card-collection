@@ -140,6 +140,8 @@ const useHome = () => {
     navigate,
 
     handleLogout,
+
+    savedCards,
   };
 };
 

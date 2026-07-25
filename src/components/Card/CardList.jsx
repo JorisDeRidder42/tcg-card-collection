@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import PokemonCard from './PokemonCard';
 
-const CardList = ({ cards, onCardClick, onCardDetailClick, isCardSaved }) => {
+const CardList = ({ cards, onCardClick, onCardDetailClick, isCardSaved, currentSet }) => {
     const getImage = (card) => {
     if(!card?.image) return '/placeholder.svg';
     return `${card.image}/low.png`;
@@ -47,7 +47,11 @@ const CardList = ({ cards, onCardClick, onCardDetailClick, isCardSaved }) => {
                   className={`save-button ${saved ? "owned" : ""}`}
                   onClick={(e)=>{
                     e.stopPropagation();
-                    onCardClick(card);
+                    onCardClick({
+                      ...card,
+                      setId: currentSet.id,
+                      setName: currentSet.name
+                    });
                   }}
                 >
                   {saved ? "✓" : "+"}

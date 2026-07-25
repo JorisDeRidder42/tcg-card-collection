@@ -36,7 +36,11 @@ const { authenticated, user, toggleSaveCard, savedCards, logout, profile} = useA
         setSearchMode={home.setSearchMode}
       />
       {/* SETS BLOKKEN */}
-      <HomeDashboard sets={home.homeSets} onSelectSet={home.setSelectedSetId} setShowAllSets={home.setShowAllSets} showAllSets={home.showAllSets}/>
+      <HomeDashboard 
+        sets={home.homeSets} 
+        setShowAllSets={home.setShowAllSets} 
+        showAllSets={home.showAllSets}
+        savedCards={home.savedCards}/>
 
       {/* SET BLOKKEN
       <section className="mt-8">

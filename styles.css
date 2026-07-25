@@ -290,11 +290,35 @@
 .set-card:active {
     transform: scale(.97);
 }
-.click-label {
-    margin-top:12px;
-    font-size:14px;
-    font-weight:600;
-    opacity:.7;
+.progress-bar-bg {
+  position: relative;
+  width: 100%;
+  height: 24px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  transition: width .3s ease;
+}
+
+.progress-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: .8rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,.5);
+}
+
+.progress-info {
+  text-align: center;
+  margin-top: .5rem;
 }
 
 

@@ -87,6 +87,7 @@ const SetDetail = () => {
       ) : (
 
         <CardList
+          currentSet={currentSet}
           cards={cards || []}
           isCardSaved={isCardSaved}
           onCardClick={toggleSaveCard}
