@@ -11,7 +11,6 @@ import { CiLogout } from "react-icons/ci";
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import HomeActions from '../components/Home/HomeActions';
 import HomeHeader from '../components/Home/HomeHeader';
-import ProgressSection from '../components/Home/ProgressSection';
 import useHome from '../hooks/useHome';
 import HomeDashboard from '../components/Home/HomeDashboard';
 
@@ -23,11 +22,7 @@ const { authenticated, user, toggleSaveCard, savedCards, logout, profile} = useA
     <div className="container py-6 max-w-screen-xl mx-auto">
       {/* PROFIEL HEADER */}
       <HomeHeader authenticated={authenticated} user={user}  profile={profile} />
-      {/* COLLECTIE PROGRESS */}
-      {/* <ProgressSection 
-        progress={home.progress}
-      /> */}
-      {/* ACTIES */}
+      {/* KNOPPEN */}
       <HomeActions
         navigate={navigate}
         user={user}
@@ -41,49 +36,6 @@ const { authenticated, user, toggleSaveCard, savedCards, logout, profile} = useA
         setShowAllSets={home.setShowAllSets} 
         showAllSets={home.showAllSets}
         savedCards={home.savedCards}/>
-
-      {/* SET BLOKKEN
-      <section className="mt-8">
-        <h2 className="text-2xl font-bold mb-4">
-          Pokémon Sets
-        </h2>
-        {
-        home.setsLoading ?
-        <p>
-          Sets laden...
-        </p>
-        :
-        <SetGrid
-          sets={home.newSets}
-          selectedSetId={home.selectedSetId}
-          setSelectedSetId={home.setSelectedSetId}
-        />
-        }
-      </section>
-      {/* ZOEKEN */}
-      {/* <section className="mt-10">
-        <SearchBar
-          searchQuery={home.searchQuery}
-          setSearchQuery={home.setSearchQuery}
-          searchParams={home.searchParams}
-          selectedSetId={home.selectedSetId}
-          setSearchParams={home.setSearchParams}
-        />
-      </section>
-      {/* KAARTEN */}
-      {/* <section className="mt-6">
-      {
-      home.cardsLoading ?
-      <SkeletonCards />
-      :
-      <CardList
-        cards={home.filteredCards}
-        isCardSaved={home.isCardSaved}
-        onCardClick={toggleSaveCard}
-        onCardDetailClick={(card)=>navigate(`/card/${card.id}`)}
-      />
-      }
-      </section> */}
     <ScrollToTopButton/>
     </div>
   );

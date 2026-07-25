@@ -7,7 +7,7 @@ const ProgressSection = ({ progress }) => {
         {progress.percentage}%
       </div>
 
-      <ProgressBar
+      <ProgressBar className="custom-progress"
         now={progress.percentage}
         variant={progress.variant}
       />

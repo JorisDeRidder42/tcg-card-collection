@@ -290,37 +290,14 @@
 .set-card:active {
     transform: scale(.97);
 }
-.progress-bar-bg {
-  position: relative;
-  width: 100%;
-  height: 24px;
-  background: #e5e7eb;
-  border-radius: 999px;
-  overflow: hidden;
+.custom-progress {
+  height: 15px!important;
+  background-color: #e5e7eb!important;
 }
 
-.progress-bar-fill {
-  height: 100%;
-  transition: width .3s ease;
+.custom-progress .progress-bar {
+  border-radius: 10px!important;
 }
-
-.progress-label {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: bold;
-  font-size: .8rem;
-  text-shadow: 0 1px 2px rgba(0,0,0,.5);
-}
-
-.progress-info {
-  text-align: center;
-  margin-top: .5rem;
-}
-
 
 /* Tablet */
 @media (max-width: 1024px) {

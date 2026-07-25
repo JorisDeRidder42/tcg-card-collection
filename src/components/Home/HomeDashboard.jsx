@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import ProgressSection  from "./ProgressSection";
+import SetProgressBar  from "../ProgressSection";
+import { getSetProgress } from "../../utils/progress";
 
 const SetDashboard = ({ sets, savedCards,showAllSets, setShowAllSets }) => {
 const navigate = useNavigate(); 
@@ -25,22 +26,9 @@ const setColors = [
       <h2 className="text-2xl font-bold mb-4">
         Pokémon Sets
       </h2>
-      <div className="bg-red-500 h-8 w-full rounded-full">
-  Test
-</div>
       <div className="set-container">
         {sets.map((set, index) => {
-  const collected = savedCards?.filter(
-  card => card.setId === set.id
-).length || 0;
-
-console.log('set', set.id, 'collected', collected);
-
-  const total = set.cardCount?.official || set.cardCount?.total || 0;
-
-  const percentage = total ? Math.round((collected / total) * 100) : 0;
-
-  const variant = percentage < 30 ? "danger" : percentage < 70 ? "warning" : "success";
+          const progress = getSetProgress(set, savedCards);
   return (
     <div
       key={set.id}
@@ -67,14 +55,7 @@ console.log('set', set.id, 'collected', collected);
         </h3>
       )}
 
-        <ProgressSection 
-          progress={{
-            collected,
-            total,
-            variant,
-            percentage
-          }}
-        />
+        <SetProgressBar progress={progress}/>
     </div>
   );
 })}

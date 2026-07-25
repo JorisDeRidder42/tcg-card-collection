@@ -4,27 +4,29 @@ import { useFetchList } from "../hooks/useDataHook";
 import CardList from "../components/Card/CardList";
 import SkeletonCards from "../loaders/SkeletonCards";
 import { useAuth } from "../Context/authContext";
+import { getSetProgress } from "../utils/progress";
+import ProgressSection from '../components/ProgressSection';
 
 const SetDetail = () => {
 
   const { setId } = useParams();
   const navigate = useNavigate();
-
+  
   const { toggleSaveCard, savedCards } = useAuth();
   // Set informatie
   const { data: sets, isLoading: setsLoading } = useFetchList("/sets");
   // Kaarten van deze set
-  const { 
-    data: cards, 
-    isLoading: cardsLoading 
-  } = useFetchList(
-    setId ? `/cards?set.id=${setId}` : null
-  );
-  const currentSet = useMemo(() => {
+  const { data: cards, isLoading: cardsLoading } = useFetchList(setId ? `/cards?set.id=${setId}` : null);
+  
+    const currentSet = useMemo(() => {
     if (!sets) return null;
     return sets.find(set => set.id === setId);
   }, [sets, setId]);
 
+  const sortedCards = useMemo(()=> {
+    if(!cards) return null;
+    return [...cards].reverse();
+  },[cards]);
 
   const isCardSaved = (id) =>
     savedCards.some(card => card.id === id);
@@ -44,8 +46,7 @@ const SetDetail = () => {
       </div>
     );
   }
-
-
+    const progress = getSetProgress(currentSet, savedCards, cards);
 
   return (
     <div className="container max-w-screen-xl mx-auto py-6">
@@ -69,15 +70,9 @@ const SetDetail = () => {
                 {currentSet.name}
               </h1>
             )}
-
-        <p className="text-center text-gray-500 mt-2">
-          {currentSet.total || currentSet.printedTotal} kaarten
-        </p>
-
-
       </section>
 
-
+      <ProgressSection progress={progress} />
 
       {/* Cards */}
       {cardsLoading ? (
@@ -88,7 +83,7 @@ const SetDetail = () => {
 
         <CardList
           currentSet={currentSet}
-          cards={cards || []}
+          cards= {sortedCards}
           isCardSaved={isCardSaved}
           onCardClick={toggleSaveCard}
           onCardDetailClick={(card) =>
