@@ -1,8 +1,8 @@
 html,
 body,
 #root {
-  min-height: 100%;
-  margin: 0;
+  min-height:100%;
+  margin:0;
 }
 
 
@@ -12,82 +12,185 @@ body,
 
 .login-page {
 
-  min-height: 100vh;
-  width: 100%;
+  min-height:100vh;
+  width:100%;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-  position: relative;
-  overflow: hidden;
+  position:relative;
+
+  overflow:hidden;
 
 
   background:
-    linear-gradient(
-      rgba(0,0,0,.55),
-      rgba(0,0,0,.85)
-    ),
+
     radial-gradient(
-      circle at center,
-      #374151,
-      #111827 55%,
-      #020617
+      circle at 50% 0%,
+      rgba(255,255,255,.15),
+      transparent 25%
+    ),
+
+    radial-gradient(
+      circle at 10% 80%,
+      rgba(59,130,246,.35),
+      transparent 35%
+    ),
+
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(168,85,247,.35),
+      transparent 35%
+    ),
+
+    linear-gradient(
+      135deg,
+      #020617,
+      #111827,
+      #1e1b4b
     );
 }
 
 
+/* Zorgt dat de login boven de kaarten zit */
 
-/* subtle light */
+.login-page > .row {
 
-.login-page::before {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(
-      circle at 20% 20%,
-      rgba(255,255,255,.08),
-      transparent 35%
-    );
-  pointer-events:none;
+  position:relative;
+
+  z-index:5;
+
 }
 
 
 
 /* =========================
-   LOGIN CARD
+   PREMIUM LOGIN CARD
 ========================= */
+
 .login-card {
-  background:
-    rgba(255,255,255,.92);
-  color:#111827;
-  backdrop-filter:
-    blur(20px);
-  border-radius:24px;
-  box-shadow:
-    0 30px 80px rgba(0,0,0,.6);
+
   position:relative;
+
   z-index:5;
+
+
+  background:
+
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.18),
+      rgba(255,255,255,.06)
+    );
+
+
+  backdrop-filter:
+    blur(25px);
+
+
+  border:
+    1px solid rgba(255,255,255,.25);
+
+
+  color:white;
+
+
+  border-radius:30px;
+
+
+  box-shadow:
+
+    0 40px 100px rgba(0,0,0,.65),
+
+    inset 0 0 50px rgba(255,255,255,.08);
+
 }
 
+
+
+/* titel */
+
+.login-card h1 {
+
+  color:white;
+
+}
+
+
+.login-card .text-muted,
+.login-subtitle {
+
+  color:
+    rgba(255,255,255,.65)!important;
+
+}
+
+/* =========================
+   INPUTS
+========================= */
+.login-card .form-control {
+  border-radius:14px;
+  padding:.8rem 1rem;
+  border:
+    1px solid #e5e7eb;
+}
+
+.login-card .form-control:focus {
+  border-color:#6366f1;
+  box-shadow:
+    0 0 0 .2rem rgba(99,102,241,.15);
+}
+
+
+
+/* =========================
+   BUTTONS
+========================= */
+.login-card .btn {
+  border-radius:14px;
+  padding:.8rem;
+  font-weight:600;
+}
+
+.login-card .btn-primary {
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #7c3aed
+    );
+  border:none;
+
+}
+
+.login-card .btn-outline-secondary {
+  background:white;
+  border-color:#d1d5db;
+  color:#374151;
+}
+
+.login-card .btn-outline-secondary:hover {
+  background:#f3f4f6;
+
+}
 
 /* =========================
    FLOATING CARDS
 ========================= */
 .floating-card {
   position:absolute;
-  width:220px;
-  opacity:.20;
+  width:230px;
+  opacity:.22;
   filter:
-    blur(.5px);
+    drop-shadow(
+      0 20px 25px rgba(0,0,0,.5)
+    );
   z-index:1;
   pointer-events:none;
   animation:
-    float 12s ease-in-out infinite;
+    float 10s ease-in-out infinite;
 }
-
-
 
 .floating-card img {
   width:100%;
@@ -97,7 +200,6 @@ body,
 /* =========================
    CARD POSITIONS
 ========================= */
-/* large background cards */
 .card-0 {
   top:-10%;
   left:2%;
@@ -130,9 +232,6 @@ body,
 }
 
 
-
-/* side cards */
-
 .card-4 {
   top:35%;
   left:-100px;
@@ -142,15 +241,12 @@ body,
 
 
 .card-5 {
-  top:45%;
-  right:-100px;
+  bottom:-25%;
+  left:400px;
   width:280px;
-  --rotation:-35deg;
+  --rotation:15deg;
 }
 
-
-
-/* middle depth cards */
 
 .card-6 {
   top:15%;
@@ -195,14 +291,12 @@ body,
   --rotation:30deg;
 }
 
-
 .card-11 {
   top:75%;
   right:30%;
   width:180px;
   opacity:.12;
   --rotation:-25deg;
-
 }
 
 /* =========================
@@ -222,9 +316,6 @@ body,
       rotate(var(--rotation));
   }
 }
-
-
-
 /* =========================
    MOBILE
 ========================= */
@@ -242,5 +333,4 @@ body,
   .card-11 {
     display:none;
   }
-
 }
