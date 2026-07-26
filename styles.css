@@ -326,6 +326,72 @@
   margin-bottom: 1rem;
   font-weight: 600;
 }
+.card-viewer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 520px;
+}
+
+
+.main-card {
+  width: 350px;
+  position: relative;
+  z-index: 3;
+  border-radius: 18px;
+}
+
+
+.stack-card {
+  width: 300px;
+  position: absolute;
+  opacity: 0.45;
+  cursor: pointer;
+  transition: all .3s ease;
+  border-radius: 18px;
+}
+
+
+.stack-card.left {
+  transform: translateX(-170px) rotate(-10deg);
+}
+
+
+.stack-card.right {
+  transform: translateX(170px) rotate(10deg);
+}
+
+
+.stack-card:hover {
+  opacity: 0.9;
+  z-index: 4;
+}
+
+
+.stack-card.left:hover {
+  transform: translateX(-210px) rotate(-5deg) scale(1.05);
+}
+
+
+.stack-card.right:hover {
+  transform: translateX(210px) rotate(5deg) scale(1.05);
+}
+.card-enter {
+  animation: slideIn .3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
 
 .set-complete {
   margin-top: 1rem;

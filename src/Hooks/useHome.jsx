@@ -1,148 +1,128 @@
-import { useEffect, useMemo, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useFetchList } from "./useDataHook";
 import { useDebounce } from "./useDebounce";
 import { useAuth } from "../Context/authContext";
 
 const MAX_SETS = 12;
+
 const useHome = () => {
   const navigate = useNavigate();
+
+  const {
+    authenticated,
+    user,
+    logout,
+    savedCards,
+    toggleSaveCard
+  } = useAuth();
+
+
   const [showAllSets, setShowAllSets] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const { authenticated, user, logout, toggleSaveCard, savedCards } = useAuth();
-
   const [searchMode, setSearchMode] = useState("set");
-  const [selectedSetId, setSelectedSetId] = useState(
-    searchParams.get("set") || ""
-  );
-  const [searchQuery, setSearchQuery] = useState(
-    searchParams.get("search") || ""
-  );
+  const [searchQuery, setSearchQuery] = useState("");
 
   const debouncedSearch = useDebounce(searchQuery, 300);
 
-  const { data: sets, isLoading: setsLoading } = useFetchList("/sets");
-  const { data: allCards } = useFetchList("/cards");
-  const { data: cards, isLoading: cardsLoading } = useFetchList(
-    selectedSetId ? `/cards?set.id=${selectedSetId}` : null
-  );
 
-  useEffect(() => {
-    if (!sets?.length || selectedSetId) return;
+  const {
+    data: sets,
+    isLoading: setsLoading
+  } = useFetchList("/sets");
 
-    setSelectedSetId([...sets].reverse()[0].id);
-  }, [sets, selectedSetId]);
 
-  useEffect(() => {
-    const params = {};
+  const {
+    data: allCards
+  } = useFetchList("/cards");
 
-    if (selectedSetId) params.set = selectedSetId;
-    if (searchQuery) params.search = searchQuery;
 
-    setSearchParams(params);
-  }, [selectedSetId, searchQuery]);
+  const homeSets = useMemo(() => {
+    if (!sets) return [];
 
- const homeSets = useMemo(() => {
-  if (!sets) return [];
+    const sortedSets = [...sets].reverse();
 
-  const sortedSets = [...sets].reverse();
+    return showAllSets
+      ? sortedSets
+      : sortedSets.slice(0, MAX_SETS);
 
-  return showAllSets
-    ? sortedSets
-    : sortedSets.slice(0, MAX_SETS);
+  }, [sets, showAllSets]);
 
-}, [sets, showAllSets]);
+
 
   const filteredCards = useMemo(() => {
-    const source = searchMode === "all" ? allCards : cards;
+
+    const source =
+      searchMode === "all"
+        ? allCards
+        : [];
+
 
     if (!source) return [];
 
-    const query = debouncedSearch.trim().toLowerCase();
+
+    const query =
+      debouncedSearch
+        .trim()
+        .toLowerCase();
+
 
     if (!query) return source;
 
+
     return source.filter(card =>
-      card.name.toLowerCase().includes(query)
+      card.name
+        .toLowerCase()
+        .includes(query)
     );
-  }, [cards, allCards, searchMode, debouncedSearch]);
 
-  const progress = useMemo(() => {
-    if (!cards?.length)
-      return {
-        owned: 0,
-        total: 0,
-        percentage: 0,
-        variant: "danger",
-      };
 
-    const owned = cards.filter(card =>
-      savedCards.some(saved => saved.id === card.id)
-    ).length;
+  }, [
+    allCards,
+    searchMode,
+    debouncedSearch
+  ]);
 
-    const total = cards.length;
 
-    const percentage = Math.round((owned / total) * 100);
-
-    return {
-      owned,
-      total,
-      percentage,
-      variant:
-        percentage < 30
-          ? "danger"
-          : percentage < 70
-          ? "warning"
-          : "success",
-    };
-  }, [cards, savedCards]);
-
-  const isCardSaved = id =>
-    savedCards.some(card => card.id === id);
 
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
 
+
+  const isCardSaved = (id) =>
+    savedCards.some(
+      card => card.id === id
+    );
+
+
   return {
     authenticated,
     user,
 
     setsLoading,
-    cardsLoading,
+
+    homeSets,
 
     showAllSets,
     setShowAllSets,
-    
-    homeSets,
-    filteredCards,
-
-    selectedSetId,
-    setSelectedSetId,
-
-    searchQuery,
-    setSearchQuery,
-
-    searchParams,
-    setSearchParams,
 
     searchMode,
     setSearchMode,
 
-    progress,
+    searchQuery,
+    setSearchQuery,
 
-    isCardSaved,
+    filteredCards,
 
     toggleSaveCard,
-
-    navigate,
+    savedCards,
+    isCardSaved,
 
     handleLogout,
-
-    savedCards,
+    navigate
   };
 };
+
 
 export default useHome;

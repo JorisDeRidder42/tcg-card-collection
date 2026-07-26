@@ -25,7 +25,11 @@ const navigate = useNavigate();
   return (
     <div
       key={set.id}
-      onClick={() => navigate(`/sets/${set.id}`)}
+      // onClick={() => navigate(`/sets/${set.id}`)}
+      onClick={() => {
+        console.log("CLICK SET", set.id);
+        navigate(`/sets/${set.id}`);
+      }}
       className="set-card">
       {set.logo ? (
         <img

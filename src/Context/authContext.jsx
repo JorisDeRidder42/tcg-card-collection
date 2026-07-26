@@ -137,11 +137,15 @@ export const AuthProvider = ({ children }) => {
           name: card.name,
           image: card.image,
           localId: card.localId,
-          setId: card.setId,
-          setName: card.setName
+          setId: card.setId ?? card.set?.id,
+          setName: card.setName ?? card.set?.name,
+          rarity: card.rarity || null,
+          category: card.category || null,
         };
-        console.log('saving card', savedCard);
+        console.log("CARD BEFORE SAVE", card);
+        console.log("SET ID TEST", card.setId, card.set?.id);
 
+        console.log("SAVED CARD OBJECT", savedCard);
         await setDoc(
           cardRef,
           savedCard
@@ -156,7 +160,7 @@ export const AuthProvider = ({ children }) => {
         );
       }
     }catch(error){
-      console.log('SavedCARd  error', error);
+      console.log('SavedCard  error', error);
       toast.error(
         "Something went wrong.", error.message
       );
