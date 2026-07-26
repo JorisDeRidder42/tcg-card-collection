@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../Context/authContext'; // or wherever your auth context lives
+import { useAuth } from '../Context/authContext';
+import {  Container,Row,Col,Card,Form,Button,Alert} from 'react-bootstrap';
+import '../styles/login.css';
+import FloatingCards from '../Components/Login/FloatingCards';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -20,6 +23,7 @@ const Login = () => {
 
     if (!email || !password) {
       setError('Please enter both email and password.');
+      setLoading(false);
       return;
     }
     setLoading(true);
@@ -47,61 +51,113 @@ const Login = () => {
   };
 
   return (
-    <div className="container mt-5 " style={{ maxWidth: '400px' }}>
-      <h2 className="mb-4 text-center">Login</h2>
+  <div className="login-page">
 
-      {error && <div className="alert alert-danger">{error}</div>}
-      {successMsg && <div className="alert alert-success">{successMsg}</div>}
+    <FloatingCards/>
 
-      <form onSubmit={handleSubmit}>
-        <div className="form-group mb-3">
-          <label>Email address</label>
-          <input
-            type="email"
-            className="form-control"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter email"
-            required
-          />
-        </div>
 
-        <div className="form-group mb-4">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            required
-          />
-        </div>
+    <Row className="w-100 justify-content-center">
 
-        <button type="submit" className="btn btn-primary w-100" disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
+      <Col xs={12} sm={10} md={8} lg={5} xl={4}>
 
-        <button
-        type="button"
-        className="btn btn-light mt-2 w-100 d-flex justify-content-center align-items-center"
-        onClick={handleGoogleSignIn}
-      >
-        Sign in with Google 
-        <svg
-            className="ms-2 bi bi-google"
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            viewBox="0 0 16 16"
-          >
-            <path d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z"/>
-          </svg>
-      </button>
-      </form>
-    </div>
-  );
+        <Card className="login-card shadow-lg border-0 rounded-4">
+
+          <Card.Body className="p-4 p-md-5">
+
+            <div className="text-center mb-4">
+              <h1 className="fw-bold">
+                Pokédex Collection
+              </h1>
+
+              <p className="text-muted">
+                Sign in to continue your collection.
+              </p>
+            </div>
+
+
+            {error && (
+              <Alert variant="danger">
+                {error}
+              </Alert>
+            )}
+
+            {successMsg && (
+              <Alert variant="success">
+                {successMsg}
+              </Alert>
+            )}
+
+
+            <Form onSubmit={handleSubmit}>
+
+              <Form.Group className="mb-3">
+                <Form.Label>
+                  Email
+                </Form.Label>
+
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e)=>setEmail(e.target.value)}
+                />
+
+              </Form.Group>
+
+
+              <Form.Group className="mb-4">
+                <Form.Label>
+                  Password
+                </Form.Label>
+
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e)=>setPassword(e.target.value)}
+                />
+
+              </Form.Group>
+
+
+              <Button
+                type="submit"
+                variant="primary"
+                className="w-100 mb-3"
+                disabled={loading}
+              >
+                {loading
+                  ? "Logging in..."
+                  : "Login"}
+              </Button>
+
+
+              <div className="text-center text-muted mb-3">
+                — OR —
+              </div>
+
+
+              <Button
+                variant="outline-secondary"
+                className="w-100"
+                type="button"
+                onClick={handleGoogleSignIn}
+              >
+                Continue with Google
+              </Button>
+
+
+            </Form>
+
+          </Card.Body>
+
+        </Card>
+
+      </Col>
+
+    </Row>
+
+  </div>
+);
 };
-
 export default Login;

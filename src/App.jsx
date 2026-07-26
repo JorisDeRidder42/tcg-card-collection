@@ -6,8 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
-    <Container fluid="md">
-      <h1 className="text-2xl text-center mt-5 font-bold">Pokémon Card Browser</h1>
+    <>
       <Routing/>
        <ToastContainer 
         position="top-right" 
@@ -20,7 +19,7 @@ function App() {
         draggable 
         pauseOnHover 
       />
-    </Container>
+    </>
     
   );
 }

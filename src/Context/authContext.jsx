@@ -142,10 +142,7 @@ export const AuthProvider = ({ children }) => {
           rarity: card.rarity || null,
           category: card.category || null,
         };
-        console.log("CARD BEFORE SAVE", card);
-        console.log("SET ID TEST", card.setId, card.set?.id);
-
-        console.log("SAVED CARD OBJECT", savedCard);
+        
         await setDoc(
           cardRef,
           savedCard
