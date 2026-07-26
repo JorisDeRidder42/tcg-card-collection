@@ -6,6 +6,7 @@ import SkeletonCards from "../loaders/SkeletonCards";
 import { useAuth } from "../Context/authContext";
 import { getSetProgress } from "../utils/progress";
 import ProgressSection from '../components/ProgressSection';
+import SetHeader from "../components/Set/SetHeader";
 
 const SetDetail = () => {
 
@@ -40,6 +41,8 @@ const SetDetail = () => {
   }
 
   if (!currentSet) {
+
+    console.log('currentSet', currentSet);
     return (
       <div className="p-6">
         Set niet gevonden
@@ -49,35 +52,16 @@ const SetDetail = () => {
     const progress = getSetProgress(currentSet, savedCards, cards);
  console.log('currentset', currentSet);
   return (
-    <div className="set-header container max-w-screen-xl mx-auto py-6">
+    <div className="container max-w-screen-xl mx-auto py-6">
 
 
       {/* Terug knop */}
-      <button className="btn btn-primary mb-6 px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300" onClick={() => navigate(-1)}>
+      <button className="btn btn-primary my-5 px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300" onClick={() => navigate(-1)}>
         ← Alle sets
       </button>
 
       {/* Set header */}
-      <section className="bg-white rounded-xl shadow-md p-6 mb-8">
-        {currentSet.logo ? (
-          <img
-            src={currentSet.logo + ".png"}
-            alt={currentSet.name}
-            className="sets-image mx-auto mb-4"
-          />
-            ) : (
-              <h1 className="text-3xl font-bold text-center">
-                {currentSet.name}
-              </h1>
-            )}
-      </section>
-
-      <ProgressSection progress={progress} />
-
-      <p className="text-center text-bold">
-        <img src={currentSet.symbol +'.png'} alt={currentSet.name} /><br />
-        {currentSet.name} - {currentSet.id}
-      </p>
+      <SetHeader currentSet={currentSet} progress={progress} />
 
       {/* Cards */}
       {cardsLoading ? (

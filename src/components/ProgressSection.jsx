@@ -1,7 +1,6 @@
 import { ProgressBar } from "react-bootstrap";
 
 const ProgressSection = ({ progress }) => {
-  console.log('progress',progress);
   return (
    <div className="mt-3">
 

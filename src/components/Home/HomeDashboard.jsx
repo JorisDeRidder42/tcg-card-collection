@@ -2,17 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import SetProgressBar  from "../ProgressSection";
 import { getSetProgress } from "../../utils/progress";
+import { getSetColor } from "../../utils/setColors";
 
 const SetDashboard = ({ sets, savedCards,showAllSets, setShowAllSets }) => {
 const navigate = useNavigate(); 
-const setColors = [
-  "#ef4444",
-  "#3b82f6",
-  "#22c55e",
-  "#a855f7",
-  "#f97316",
-  "#eab308",
-];
 
   if (!sets || sets.length === 0) {
     return (
@@ -33,15 +26,7 @@ const setColors = [
     <div
       key={set.id}
       onClick={() => navigate(`/sets/${set.id}`)}
-      className="set-card"
-      style={{
-        background: `linear-gradient(
-          120deg,
-          ${setColors[index % setColors.length]},
-          white
-        )`
-      }}
-    >
+      className="set-card">
       {set.logo ? (
         <img
           src={set.logo + '.png'}
