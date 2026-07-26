@@ -3,7 +3,9 @@ export const getSetProgress = (set, savedCards = [], cards = []) => {
     card => card.setId === set.id
   ).length;
 
-  const total = set.cardCount?.official || set.cardCount?.total || cards.length || 0;
+  const total = set.cardCount?.total || set.cardCount?.official || cards.length || 0;
+
+  const missing = Math.max(total - collected, 0);
   
   const percentage = total
     ? Math.round((collected / total) * 100)
@@ -19,7 +21,9 @@ export const getSetProgress = (set, savedCards = [], cards = []) => {
   return {
     collected,
     total,
+    missing,
     percentage,
     variant,
+    complete: percentage === 100
   };
 };

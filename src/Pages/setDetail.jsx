@@ -47,14 +47,14 @@ const SetDetail = () => {
     );
   }
     const progress = getSetProgress(currentSet, savedCards, cards);
-
+ console.log('currentset', currentSet);
   return (
-    <div className="container max-w-screen-xl mx-auto py-6">
+    <div className="set-header container max-w-screen-xl mx-auto py-6">
 
 
       {/* Terug knop */}
       <button className="btn btn-primary mb-6 px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300" onClick={() => navigate(-1)}>
-        ← Terug
+        ← Alle sets
       </button>
 
       {/* Set header */}
@@ -73,6 +73,11 @@ const SetDetail = () => {
       </section>
 
       <ProgressSection progress={progress} />
+
+      <p className="text-center text-bold">
+        <img src={currentSet.symbol +'.png'} alt={currentSet.name} /><br />
+        {currentSet.name} - {currentSet.id}
+      </p>
 
       {/* Cards */}
       {cardsLoading ? (
