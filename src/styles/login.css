@@ -142,8 +142,6 @@ body,
     0 0 0 .2rem rgba(99,102,241,.15);
 }
 
-
-
 /* =========================
    BUTTONS
 ========================= */
@@ -180,23 +178,22 @@ body,
 ========================= */
 .floating-card {
   position:absolute;
-  width:230px;
-  opacity:.22;
+  width:200px;
+  opacity:.25;
   filter:
     drop-shadow(
       0 20px 25px rgba(0,0,0,.5)
     );
   z-index:1;
   pointer-events:none;
-  animation:
-    float 10s ease-in-out infinite;
+  animation: float 10s ease-in-out infinite;
 }
 
 .floating-card img {
   width:100%;
   display:block;
+  border-radius:1em;
 }
-
 /* =========================
    CARD POSITIONS
 ========================= */
@@ -206,7 +203,6 @@ body,
   width:260px;
   --rotation:-25deg;
 }
-
 
 .card-1 {
   top:5%;

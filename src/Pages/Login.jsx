@@ -55,7 +55,6 @@ const Login = () => {
 
     <FloatingCards/>
 
-
     <Row className="w-100 justify-content-center">
 
       <Col xs={12} sm={10} md={8} lg={5} xl={4}>

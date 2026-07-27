@@ -1,0 +1,207 @@
+*{
+    margin:0;
+    padding:0;
+}
+/* =========================
+   COLORS
+========================= */
+:root {
+
+  --color-bg: #020617;
+  --color-card: #111827;
+
+  --color-primary: #2563eb;
+  --color-secondary: #7c3aed;
+
+  --color-gold: #facc15;
+
+  --color-text: #ffffff;
+  --color-muted: #94a3b8;
+
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+
+}
+
+
+/* =========================
+   BORDER RADIUS
+========================= */
+
+:root {
+
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+
+}
+
+
+/* =========================
+   SHADOWS
+========================= */
+
+:root {
+
+  --shadow-sm:
+    0 5px 15px rgba(0,0,0,.15);
+
+  --shadow-md:
+    0 15px 35px rgba(0,0,0,.25);
+
+  --shadow-lg:
+    0 30px 70px rgba(0,0,0,.35);
+
+}
+
+
+/* =========================
+   GLASS
+========================= */
+
+:root {
+
+  --glass-bg:
+    rgba(255,255,255,.12);
+
+  --glass-border:
+    rgba(255,255,255,.2);
+
+}
+
+
+/* =========================
+   TRANSITIONS
+========================= */
+
+:root {
+
+  --transition-fast:
+    .2s ease;
+
+  --transition:
+    .3s ease;
+
+}
+
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+
+:root {
+
+  --font-title:
+    "Poppins", sans-serif;
+
+  --font-body:
+    "Inter", sans-serif;
+
+}
+
+.color-card{
+    height:160px;
+    border-radius:20px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-weight:600;
+}
+
+.background{
+    background:var(--color-bg);
+}
+
+.cards{
+    background:var(--color-card);
+}
+
+.primary{
+    background:var(--color-primary);
+}
+
+.accent{
+    background:var(--color-secondary);
+}
+
+.gold{
+    background:var(--color-gold);
+    color:black;
+}
+.btn{
+    border-radius:var(--radius-sm);
+    font-weight:600;
+    transition:.25s;
+    border:none;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+.btn-primary{
+    background:var(--color-primary);
+}
+.btn-secondary{
+     background:var(--color-secondary);
+}
+.btn-success{
+    background:var(--color-success);
+}
+.btn-danger{
+    background:var(--color-danger);
+}
+
+.style-card{
+    height:180px;
+    border-radius:24px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    transition:.3s;
+
+}
+
+.style-card:hover{
+    transform:translateY(-6px);
+}
+
+
+/* Glass */
+
+.glass{
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.2);
+    color:white;
+}
+
+
+/* Dashboard */
+.dashboard{
+    background:var(--color-surface);
+    color:white;
+    box-shadow:var(--shadow-md);
+}
+
+
+/* Pokemon */
+.pokemon{
+    background:
+    linear-gradient(
+        145deg,
+        var(--color-primary),
+        var(--color-secondary)
+    );
+
+    color:white;
+}
+.style-section-dark{
+    background:var(--color-bg);
+    border-radius:24px;
+    padding:2rem;
+}
