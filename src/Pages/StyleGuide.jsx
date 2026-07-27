@@ -306,6 +306,33 @@ const StyleGuide = () => {
 
 </section>
             </section>
+            <section className="mt-5">
+
+<h2>
+    Typography
+</h2>
+
+<h1 className="text-gradient">
+    Pokédex Collection
+</h1>
+
+<h2>
+    My Collection
+</h2>
+
+<h3>
+    Charizard EX
+</h3>
+
+<p>
+    Track your Pokémon cards.
+</p>
+
+<p className="text-muted">
+    Last updated today
+</p>
+
+</section>
         </div>
     );
 };

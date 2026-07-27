@@ -286,8 +286,6 @@
     var(--shadow-md);
 }
 
-
-
 /* Pokemon Types */
 .fire {
     background:
@@ -298,7 +296,6 @@
     );
 }
 
-
 .water {
     background:
     linear-gradient(
@@ -307,7 +304,6 @@
         #06b6d4
     );
 }
-
 
 .grass {
     background:
@@ -336,8 +332,6 @@
         #312e81
     );
 }
-
-
 
 /* Rarity */
 .legendary {
@@ -369,67 +363,45 @@
 }
 
 .common {
-
     background:
     rgba(255,255,255,.15);
-
 }
-
 /* =========================
    BOOTSTRAP PROGRESS
 ========================= */
-
-
 .pokemon-progress {
-
     height:14px;
-
     background:
     rgba(255,255,255,.12);
-
     border-radius:
     999px;
-
     overflow:hidden;
-
 }
 
 
 .pokemon-progress .progress-bar {
-
     background:
     var(--gradient-primary);
-
     border-radius:
     999px;
-
     box-shadow:
     0 0 15px rgba(124,58,237,.5);
-
 }
 
-
-
 .pokemon-progress.success .progress-bar {
-
     background:
     linear-gradient(
         135deg,
         #22c55e,
         #16a34a
     );
-
 }
 
-
-
 .pokemon-progress.danger .progress-bar {
-
     background:
     linear-gradient(
         135deg,
         #ef4444,
         #f97316
     );
-
 }
