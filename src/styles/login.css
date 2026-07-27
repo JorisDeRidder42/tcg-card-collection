@@ -4,12 +4,31 @@ body,
   min-height:100%;
   margin:0;
 }
+:root{
+  /* COLORS */
+    --color-bg: #020617;
+    --color-surface: #111827;
+    --color-primary: #2563eb;
+    --color-secondary: #7c3aed;
+    --gradient-primary:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #7c3aed
+        );
+    --color-gold: #facc15;
+    --color-text: #ffffff;
+    --color-muted: #94a3b8;
+    --color-success: #22c55e;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+
+}
 
 
 /* =========================
    MAIN LOGIN BACKGROUND
 ========================= */
-
 .login-page {
   min-height:100vh;
   width:100%;
@@ -18,8 +37,13 @@ body,
   justify-content:center;
   position:relative;
   overflow:hidden;
+  background:var(--gradient-primary);
 }
 
+.card-body{
+  border-radius: 1em;
+  background:var(--color-surface);
+}
 
 /* Zorgt dat de login boven de kaarten zit */
 .login-page > .row {
@@ -52,9 +76,7 @@ body,
 /* titel */
 
 .login-card h1 {
-
   color:white;
-
 }
 
 
