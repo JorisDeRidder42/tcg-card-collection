@@ -11,56 +11,20 @@ body,
 ========================= */
 
 .login-page {
-
   min-height:100vh;
   width:100%;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   position:relative;
-
   overflow:hidden;
-
-
-  background:
-
-    radial-gradient(
-      circle at 50% 0%,
-      rgba(255,255,255,.15),
-      transparent 25%
-    ),
-
-    radial-gradient(
-      circle at 10% 80%,
-      rgba(59,130,246,.35),
-      transparent 35%
-    ),
-
-    radial-gradient(
-      circle at 90% 20%,
-      rgba(168,85,247,.35),
-      transparent 35%
-    ),
-
-    linear-gradient(
-      135deg,
-      #020617,
-      #111827,
-      #1e1b4b
-    );
 }
 
 
 /* Zorgt dat de login boven de kaarten zit */
-
 .login-page > .row {
-
   position:relative;
-
   z-index:5;
-
 }
 
 
@@ -70,41 +34,17 @@ body,
 ========================= */
 
 .login-card {
-
   position:relative;
-
   z-index:5;
-
-
-  background:
-
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,.18),
-      rgba(255,255,255,.06)
-    );
-
-
-  backdrop-filter:
+   backdrop-filter:
     blur(25px);
-
-
   border:
     1px solid rgba(255,255,255,.25);
-
-
   color:white;
-
-
   border-radius:30px;
-
-
   box-shadow:
-
     0 40px 100px rgba(0,0,0,.65),
-
     inset 0 0 50px rgba(255,255,255,.08);
-
 }
 
 
