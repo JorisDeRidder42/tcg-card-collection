@@ -23,26 +23,40 @@ body,
     --color-warning: #f59e0b;
     --color-danger: #ef4444;
 
+        /* GLASS */
+    --glass-bg:
+        rgba(255, 255, 255, .08);
+    --glass-border:
+        rgba(255,255,255,.2);
 }
-
 
 /* =========================
    MAIN LOGIN BACKGROUND
 ========================= */
 .login-page {
-  min-height:100vh;
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  overflow:hidden;
-  background:var(--gradient-primary);
-}
-
-.card-body{
-  border-radius: 1em;
-  background:var(--color-surface);
+    min-height:100vh;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at top,
+            rgba(255,255,255,.10),
+            transparent 35%),
+        radial-gradient(circle at bottom left,
+            rgba(37,99,235,.35),
+            transparent 40%),
+        radial-gradient(circle at bottom right,
+            rgba(124,58,237,.35),
+            transparent 40%),
+        linear-gradient(
+            135deg,
+            #020617,
+            #111827,
+            #1e1b4b
+        );
 }
 
 /* Zorgt dat de login boven de kaarten zit */
@@ -50,77 +64,103 @@ body,
   position:relative;
   z-index:5;
 }
-
-
-
 /* =========================
    PREMIUM LOGIN CARD
 ========================= */
+/* =========================
+   POKÉMON PREMIUM CARD
+========================= */
 
 .login-card {
-  position:relative;
-  z-index:5;
-   backdrop-filter:
-    blur(25px);
-  border:
-    1px solid rgba(255,255,255,.25);
-  color:white;
-  border-radius:30px;
-  box-shadow:
-    0 40px 100px rgba(0,0,0,.65),
-    inset 0 0 50px rgba(255,255,255,.08);
-}
+    position:relative;
+     background:
+        linear-gradient(
+            145deg,
+            rgba(37,99,235,.18),
+            rgba(124,58,237,.12)
+        );
 
+    border-radius:28px;
+    border:
+        1px solid rgba(255,255,255,.18);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.65),
+        inset 0 0 40px rgba(124,58,237,.15);
+}
 
 
 /* titel */
-
-.login-card h1 {
-  color:white;
+.login-card h1{
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #93c5fd,
+            #c4b5fd
+        );
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
-
 
 .login-card .text-muted,
 .login-subtitle {
-
   color:
     rgba(255,255,255,.65)!important;
-
 }
 
 /* =========================
    INPUTS
 ========================= */
-.login-card .form-control {
-  border-radius:14px;
-  padding:.8rem 1rem;
-  border:
-    1px solid #e5e7eb;
+.login-card .form-control{
+
+    background:
+        rgba(0,0,0,.25);
+
+    color:white;
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
 }
 
-.login-card .form-control:focus {
-  border-color:#6366f1;
-  box-shadow:
-    0 0 0 .2rem rgba(99,102,241,.15);
+.login-card .form-control:focus{
+    background:
+        rgba(0,0,0,.35);
+    border-color:
+        #facc15;
+    box-shadow:
+        0 0 0 .2rem rgba(250,204,21,.15),
+        0 0 25px rgba(250,204,21,.25);
 }
 
 /* =========================
    BUTTONS
 ========================= */
-.login-card .btn {
-  border-radius:14px;
-  padding:.8rem;
-  font-weight:600;
+.login-card .btn-primary{
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #7c3aed
+        );
+
+
+    border:none;
+
+
+    box-shadow:
+
+        0 10px 30px rgba(124,58,237,.45);
+
 }
 
-.login-card .btn-primary {
-  background:
-    linear-gradient(
-      135deg,
-      #2563eb,
-      #7c3aed
-    );
-  border:none;
+
+
+.login-card .btn-primary:hover{
+
+    transform:
+        translateY(-3px);
 
 }
 
@@ -141,7 +181,7 @@ body,
 .floating-card {
   position:absolute;
   width:200px;
-  opacity:.25;
+  opacity:.35;
   filter:
     drop-shadow(
       0 20px 25px rgba(0,0,0,.5)

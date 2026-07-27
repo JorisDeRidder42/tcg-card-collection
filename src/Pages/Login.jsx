@@ -61,7 +61,7 @@ const Login = () => {
 
         <Card className="login-card shadow-lg border-0 rounded-4">
 
-          <Card.Body className="p-4 p-md-5">
+          <Card.Body className="p-4 p-md-5 glass">
 
             <div className="text-center mb-4">
               <h1 className="fw-bold">
