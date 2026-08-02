@@ -89,7 +89,7 @@ const nextCard =
           <div className="card-viewer">
             {previousCard && (
               <img
-                src={`${previousCard.image}/low.png`}
+                src={`${previousCard.image}/high.png`}
                 alt={previousCard.name}
                 className="stack-card left"
                 onClick={() =>
@@ -108,7 +108,7 @@ const nextCard =
 
             {nextCard && (
               <img
-                src={`${nextCard.image}/low.png`}
+                src={`${nextCard.image}/high.png`}
                 alt={nextCard.name}
                 className="stack-card right"
                 onClick={() =>

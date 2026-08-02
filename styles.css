@@ -1,9 +1,9 @@
-/* CARDS
+CARDS
 /* BUTTONS */
 /* LAYOUT */
 /* UTILITIES */
 
-/* 
+/*
 *{
     margin: 0;
     padding: 0;
@@ -358,7 +358,7 @@
 .stack-card:hover {
   opacity: 0.9;
   z-index: 4;
-}
+} */
 
 
 .stack-card.left:hover {
@@ -395,7 +395,7 @@
   text-align: center;
   animation: pulseGlow 1.8s infinite;
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.45);
-} */
+}*/
 /* 
 @keyframes pulseGlow {
   0% {
@@ -422,4 +422,4 @@
     .set-container {
         grid-template-columns: repeat(2, 1fr);
     }
-} */
+}

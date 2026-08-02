@@ -33,7 +33,6 @@ const CardList = ({ cards, onCardClick, onCardDetailClick, isCardSaved, currentS
                 <img
                   src={getImage(card)}
                   alt={card.name}
-                  loading="lazy"
                   className="card-image"
                   onError={(e)=>
                     e.target.src="/placeholder.svg"
