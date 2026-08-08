@@ -64,6 +64,19 @@ body,
   position:relative;
   z-index:5;
 }
+
+
+/* Glass */
+.glass {
+    background:
+    var(--glass-bg);
+    backdrop-filter:
+    blur(5px);
+    border:
+    1px solid var(--glass-border);
+    border-radius:1em;
+    color:white;
+}
 /* =========================
    PREMIUM LOGIN CARD
 ========================= */
@@ -73,16 +86,13 @@ body,
 
 .login-card {
     position:relative;
+    border-radius:1em;
      background:
         linear-gradient(
             145deg,
             rgba(37,99,235,.18),
             rgba(124,58,237,.12)
         );
-
-    border-radius:28px;
-    border:
-        1px solid rgba(255,255,255,.18);
     box-shadow:
         0 30px 80px rgba(0,0,0,.65),
         inset 0 0 40px rgba(124,58,237,.15);
@@ -101,7 +111,6 @@ body,
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
 }
-
 .login-card .text-muted,
 .login-subtitle {
   color:
@@ -112,15 +121,16 @@ body,
    INPUTS
 ========================= */
 .login-card .form-control{
-
     background:
         rgba(0,0,0,.25);
-
     color:white;
-
     border:
         1px solid rgba(255,255,255,.15);
 
+}
+.login-card input::placeholder{
+    color:
+        rgba(255,255,255,.65);
 }
 
 .login-card .form-control:focus{
@@ -137,21 +147,15 @@ body,
    BUTTONS
 ========================= */
 .login-card .btn-primary{
-
     background:
         linear-gradient(
             135deg,
             #2563eb,
             #7c3aed
         );
-
-
     border:none;
-
-
     box-shadow:
-
-        0 10px 30px rgba(124,58,237,.45);
+      0 10px 30px rgba(124,58,237,.45);
 
 }
 

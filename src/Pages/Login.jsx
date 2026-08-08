@@ -4,6 +4,7 @@ import { useAuth } from '../Context/authContext';
 import {  Container,Row,Col,Card,Form,Button,Alert} from 'react-bootstrap';
 import '../styles/login.css';
 import FloatingCards from '../Components/Login/FloatingCards';
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -52,27 +53,19 @@ const Login = () => {
 
   return (
   <div className="login-page">
-
     <FloatingCards/>
-
     <Row className="w-100 justify-content-center">
-
       <Col xs={12} sm={10} md={8} lg={5} xl={4}>
-
-        <Card className="login-card shadow-lg border-0 rounded-4">
-
+        <Card className="login-card shadow-md">
           <Card.Body className="p-4 p-md-5 glass">
-
             <div className="text-center mb-4">
               <h1 className="fw-bold">
                 Pokédex Collection
               </h1>
-
               <p className="text-muted">
                 Sign in to continue your collection.
               </p>
             </div>
-
 
             {error && (
               <Alert variant="danger">
@@ -85,7 +78,6 @@ const Login = () => {
                 {successMsg}
               </Alert>
             )}
-
 
             <Form onSubmit={handleSubmit}>
 
@@ -103,7 +95,6 @@ const Login = () => {
 
               </Form.Group>
 
-
               <Form.Group className="mb-4">
                 <Form.Label>
                   Password
@@ -117,8 +108,6 @@ const Login = () => {
                 />
 
               </Form.Group>
-
-
               <Button
                 type="submit"
                 variant="primary"
@@ -130,11 +119,9 @@ const Login = () => {
                   : "Login"}
               </Button>
 
-
               <div className="text-center text-muted mb-3">
                 — OR —
               </div>
-
 
               <Button
                 variant="outline-secondary"
@@ -142,21 +129,14 @@ const Login = () => {
                 type="button"
                 onClick={handleGoogleSignIn}
               >
-                Continue with Google
+               <FcGoogle /> Continue with Google
               </Button>
-
-
             </Form>
-
           </Card.Body>
-
         </Card>
-
       </Col>
-
     </Row>
-
   </div>
-);
+  );
 };
 export default Login;
