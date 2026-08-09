@@ -111,7 +111,7 @@ const Login = () => {
               <Button
                 type="submit"
                 variant="primary"
-                className="w-100 mb-3"
+                className="w-100 mb-3 p-3"
                 disabled={loading}
               >
                 {loading
@@ -124,7 +124,7 @@ const Login = () => {
               </div>
 
               <Button
-                variant="outline-secondary"
+                variant="outline-secondary p-3"
                 className="w-100"
                 type="button"
                 onClick={handleGoogleSignIn}
