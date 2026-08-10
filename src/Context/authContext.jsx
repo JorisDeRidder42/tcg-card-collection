@@ -75,11 +75,11 @@ export const AuthProvider = ({ children }) => {
       await setDoc(
         userRef,
         {
-          displayName: firebaseUser.displayName,
+          displayName: additionalData.displayName || email.split('@')[0],
           email: firebaseUser.email,
-          photoURL: firebaseUser.photoURL,
-          favoritePokemon: "",
-          favoriteSet: "",
+          photoURL: firebaseUser.photoURL || "",
+          favoritePokemon: "Eevee",
+          favoriteSet: "Ascended heroes",
           role: "user",
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp()

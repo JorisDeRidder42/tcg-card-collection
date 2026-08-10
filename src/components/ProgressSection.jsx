@@ -20,7 +20,7 @@ const ProgressSection = ({ progress }) => {
             {progress.collected} / {progress.total} kaarten
           </p>
 
-          <p className="text-center text-muted small mb-0">
+          <p className="text-center opacity-80 small mb-0">
             Nog <span className="fw-bold">{progress.missing}</span> kaarten te verzamelen
           </p>
         </>

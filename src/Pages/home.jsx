@@ -21,15 +21,7 @@ const { authenticated, user, toggleSaveCard, savedCards, logout, profile} = useA
   return (
     <div className="container py-6 max-w-screen-xl mx-auto">
       {/* PROFIEL HEADER */}
-      <HomeHeader authenticated={authenticated} user={user}  profile={profile} />
-      {/* KNOPPEN */}
-      <HomeActions
-        navigate={navigate}
-        user={user}
-        logout={home.handleLogout}
-        searchMode={home.searchMode}
-        setSearchMode={home.setSearchMode}
-      />
+      <HomeHeader />
       {/* SETS BLOKKEN */}
       <HomeDashboard 
         sets={home.homeSets} 
