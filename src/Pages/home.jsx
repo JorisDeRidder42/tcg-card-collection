@@ -14,6 +14,7 @@ import HomeHeader from '../components/Home/HomeHeader';
 import useHome from '../hooks/useHome';
 import HomeDashboard from '../components/Home/HomeDashboard';
 
+
 const Home = () => {
 const { authenticated, user, toggleSaveCard, savedCards, logout, profile} = useAuth();
   const navigate = useNavigate();
