@@ -1,58 +1,91 @@
-import React from "react";
-
-import { Card, Row, Col } from "react-bootstrap";
-
-import ProgressSection from "../ProgressSection";
-
-
+import React from 'react';
+import { Card, Row, Col } from 'react-bootstrap';
+import ProgressSection from '../ProgressSection';
 
 const SetHeader = ({ currentSet, progress }) => {
+  if (!currentSet) return null;
 
-  if (!currentSet) return null; // Veiligheidscheck
   return (
     <Card className="mt-5 text-light border-0 shadow-lg none-hover-card mb-4 p-4 rounded-4">
       <Card.Body className="p-0">
-        {/* Header Grid: Links Logo, Rechts Informatie */}
-        <Row className="align-items-center mb-5">
-          {/* Linker kolom: Set Logo (Neemt ca. 40% in beslag) */}
-          <Col xs={12} md={4} className="text-center text-md-start mb-4 mb-md-0">
+        <Row className="align-items-center">
+          {/* Linker kolom: Logo, Titel en de Info-pillen */}
+          <Col
+            xs={12}
+            lg={5}
+            className="text-center text-lg-start mb-4 mb-lg-0"
+          >
+            {/* Logo */}
             {currentSet.logo && (
-              <img
-                src={currentSet.logo + ".png"}
-                alt={currentSet.name}
-                className="img-fluid"
-                style={{maxHeight: '150px', objectFit: 'contain', filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.3))'
-                }}
-              />
+              <div className="mb-3">
+                <img
+                  src={currentSet.logo + '.png'}
+                  alt={currentSet.name}
+                  className="img-fluid"
+                />
+              </div>
             )}
-          </Col>
-          {/* Rechter kolom: Titel en Info (Neemt ca. 60% in beslag) */}
-          <Col xs={12} md={8} className="text-center text-md-start">
-            <h1 className="fw-bold mb-4 display-6" style={{ textShadow: '0 3px 8px rgba(0,0,0,0.6)' }}>
+            <h1
+              className="fw-bold display-6 mb-3"
+              style={{ textShadow: '0 3px 8px rgba(0,0,0,0.6)' }}
+            >
               {currentSet.name}
             </h1>
-            <div className="d-flex flex-wrap gap-4 justify-content-center justify-content-md-start text-muted">
-              {/* Set Symbool */}
+
+            {/* Info blokjes onder elkaar of netjes in een flex */}
+            <div className="d-flex flex-wrap gap-2 justify-content-center justify-content-lg-start text-muted">
               {currentSet.symbol && (
                 <div className="d-flex align-items-center gap-2 bg-dark bg-opacity-50 px-3 py-2 rounded-pill">
-                  <img src={currentSet.symbol + ".png"} alt={currentSet.name} width={28} height={28} style={{ objectFit: 'contain' }} className="bg-white p-1 rounded-circle"
+                  <img
+                    src={currentSet.symbol + '.png'}
+                    alt={currentSet.name}
+                    width={22}
+                    height={22}
+                    style={{ objectFit: 'contain' }}
+                    className="bg-white p-1 rounded-circle"
                   />
-                  <span className="small">Set Symbool</span>
+                  <span className="small text-light">Set Symbool</span>
                 </div>
               )}
-              {/* Tellingen */}
-              <div className="bg-dark bg-opacity-50 px-3 py-2 rounded-pill small">
-                Official Count: <strong className="text-light ms-1">{currentSet.cardCount.official}</strong>
+
+              <div className="bg-dark bg-opacity-50 px-3 text-light py-2 rounded-pill small">
+                Official:{' '}
+                <strong className="text-light ms-1">
+                  {currentSet.cardCount.official}
+                </strong>
               </div>
-              <div className="bg-dark bg-opacity-50 px-3 py-2 rounded-pill small">
-                Total Cards: <strong className="text-light ms-1">{currentSet.cardCount.total}</strong>
+
+              <div className="bg-dark bg-opacity-50 px-3 text-light py-2 rounded-pill small">
+                Total:{' '}
+                <strong className="text-light ms-1">
+                  {currentSet.cardCount.total}
+                </strong>
               </div>
             </div>
           </Col>
-          <Col xs={12} md={8}>
-            <div className="mt-3 border-top pt-4 border-secondary border-opacity-50">
-              <h5 className="text-muted mb-3 text-center">Je Collectie Voortgang</h5>
-              <ProgressSection progress={progress} />
+
+          {/* Rechter kolom: De voortgangsbalk krijgt nu alle ruimte */}
+          <Col xs={12} lg={7} className="ps-lg-4">
+            <div className="bg-dark bg-opacity-50 p-4 rounded-4 w-100 border border-secondary border-opacity-25 shadow-sm">
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h5 className="m-0 fs-6 text-light">Voortgang Collectie</h5>
+                <span
+                  className="badge px-3 py-2 fs-6 fw-bold"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, #4f46e5 0%, #9333ea 100%)',
+                    color: '#fff',
+                    borderRadius: '8px',
+                  }}
+                >
+                  {progress?.percentage || 0}%
+                </span>
+              </div>
+
+              {/* De balk zelf */}
+              <div className="my-3">
+                <ProgressSection progress={progress} />
+              </div>
             </div>
           </Col>
         </Row>
@@ -60,4 +93,5 @@ const SetHeader = ({ currentSet, progress }) => {
     </Card>
   );
 };
+
 export default SetHeader;
