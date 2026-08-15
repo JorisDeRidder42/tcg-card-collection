@@ -58,7 +58,6 @@ const CardList = ({
                   <Button
                     onClick={(e) => {
                       e.stopPropagation();
-                      onCardGridClickAction(card); // of je originele onCardClick handler
                       onCardClick({
                         ...card,
                         setId: currentSet.id,
