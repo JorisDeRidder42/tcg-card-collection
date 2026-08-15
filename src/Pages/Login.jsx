@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../Context/authContext';
-import {  Container,Row,Col,Card,Form,Button,Alert} from 'react-bootstrap';
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Form,
+  Button,
+  Alert,
+} from 'react-bootstrap';
 import '../styles/login.css';
 import FloatingCards from '../Components/Login/FloatingCards';
-import { FcGoogle } from "react-icons/fc";
+import { FcGoogle } from 'react-icons/fc';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -35,8 +43,7 @@ const Login = () => {
       navigate('/');
     } catch {
       setError('The email or password is incorrect. Please try again.');
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -46,97 +53,78 @@ const Login = () => {
     try {
       await googleSignIn();
       navigate('/');
-    } catch{
+    } catch {
       setError('Google sign-in failed. Try again.');
     }
   };
 
   return (
-  <div className="login-page">
-    <FloatingCards/>
-    <Row className="w-100 justify-content-center">
-      <Col xs={12} sm={10} md={8} lg={5} xl={4}>
-        <Card className="login-card shadow-md">
-          <Card.Body className="p-4 p-md-5 glass">
-            <div className="text-center mb-4">
-              <h1 className="fw-bold">
-                Pokédex Collection
-              </h1>
-              <p className="text-muted">
-                Sign in to continue your collection.
-              </p>
-            </div>
-
-            {error && (
-              <Alert variant="danger">
-                {error}
-              </Alert>
-            )}
-
-            {successMsg && (
-              <Alert variant="success">
-                {successMsg}
-              </Alert>
-            )}
-
-            <Form onSubmit={handleSubmit}>
-
-              <Form.Group className="mb-3">
-                <Form.Label>
-                  Email
-                </Form.Label>
-
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  value={email}
-                  onChange={(e)=>setEmail(e.target.value)}
-                />
-
-              </Form.Group>
-
-              <Form.Group className="mb-4">
-                <Form.Label>
-                  Password
-                </Form.Label>
-
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e)=>setPassword(e.target.value)}
-                />
-
-              </Form.Group>
-              <Button
-                type="submit"
-                variant="primary"
-                className="w-100 mb-3 p-3"
-                disabled={loading}
-              >
-                {loading
-                  ? "Logging in..."
-                  : "Login"}
-              </Button>
-
-              <div className="text-center text-muted mb-3">
-                — OR —
+    <div className="login-page">
+      <FloatingCards />
+      <Row className="w-100 justify-content-center">
+        <Col xs={12} sm={10} md={8} lg={5} xl={4}>
+          <Card className="login-card shadow-md">
+            <Card.Body className="p-4 p-md-5 glass">
+              <div className="text-center mb-4">
+                <h1 className="fw-bold">Pokédex Collection</h1>
+                <p className="text-muted">
+                  Sign in to continue your collection.
+                </p>
               </div>
 
-              <Button
-                variant="outline-secondary p-3"
-                className="w-100"
-                type="button"
-                onClick={handleGoogleSignIn}
-              >
-               <FcGoogle /> Continue with Google
-              </Button>
-            </Form>
-          </Card.Body>
-        </Card>
-      </Col>
-    </Row>
-  </div>
+              {error && <Alert variant="danger">{error}</Alert>}
+
+              {successMsg && <Alert variant="success">{successMsg}</Alert>}
+
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Email</Form.Label>
+
+                  <Form.Control
+                    type="email"
+                    placeholder="Enter email"
+                    value={email}
+                    required={true}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-4">
+                  <Form.Label>Password</Form.Label>
+
+                  <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    required={true}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Form.Group>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  className="w-100 mb-3 p-3"
+                  disabled={loading}
+                >
+                  {loading ? 'Logging in...' : 'Login'}
+                </Button>
+
+                <div className="text-center text-muted mb-3">— OR —</div>
+
+                <Button
+                  variant="outline-secondary p-3"
+                  className="w-100"
+                  type="button"
+                  onClick={handleGoogleSignIn}
+                >
+                  <FcGoogle /> Continue with Google
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </div>
   );
 };
 export default Login;
