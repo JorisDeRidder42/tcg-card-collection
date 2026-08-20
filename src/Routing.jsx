@@ -1,30 +1,35 @@
-import { Route, Routes} from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './pages/ProtectedRoute';
 import Fault from './pages/fault';
 import Home from './pages/Home';
-import Login from './Pages/Login';  
+import Login from './Pages/Login';
 import SavedCardsPage from './pages/SavedCardsPage';
 import StyleGuide from './pages/StyleGuide';
 import CardDetail from './components/Card/CardDetail';
 import SetDetail from './pages/setDetail';
+import Friends from './pages/Friends';
 
 const Routing = () => {
-    return (
-        <Routes>
-            <Route exact path="/" 
-             element={<ProtectedRoute>
-              <Home/>
-            </ProtectedRoute>
-          }
-        />
-            <Route path={'/card/:id'} element={<CardDetail/>}/>
-            <Route path={'/login'} element={<Login/>}/>
-            <Route path={'/saved'} element={<SavedCardsPage/>}/>
-            <Route path={'/styleguide'} element={<StyleGuide/>}/>
-            <Route path={'/sets/:setId'} element={<SetDetail/>}/>
-            <Route path={'*'} element={<Fault/>}/>
-        </Routes>
-    )
-}
+  return (
+    <Routes>
+      <Route
+        exact
+        path="/"
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
+      <Route path={'/card/:id'} element={<CardDetail />} />
+      <Route path={'/login'} element={<Login />} />
+      <Route path={'/saved'} element={<SavedCardsPage />} />
+      <Route path={'/styleguide'} element={<StyleGuide />} />
+      <Route path={'/sets/:setId'} element={<SetDetail />} />
+      <Route path={'/friends'} element={<Friends />} />
+      <Route path={'*'} element={<Fault />} />
+    </Routes>
+  );
+};
 
 export default Routing;

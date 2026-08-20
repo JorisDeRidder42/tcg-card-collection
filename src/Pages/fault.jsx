@@ -6,8 +6,8 @@ const Fault = () => {
 
   return (
     <div className="text-center mt-5">
-      <h1 className="display-1">404</h1>
-      <p className="lead">Page not found</p>
+      <h1 className="text-light">404</h1>
+      <h6 className="text-light">Page not found</h6>
       <button className="btn btn-primary" onClick={() => navigate('/')}>
         Back Home
       </button>

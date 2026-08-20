@@ -1,24 +1,28 @@
 /* --- TEMA VARIABELEN (Eenvoudig achteraf aan te passen) --- */
 :root {
-  --bg-main: #0A0F1A;
+  --bg-main: #0a0f1a;
   --bg-gradient-1: rgba(79, 70, 229, 0.15);
   --bg-gradient-2: rgba(147, 51, 234, 0.15);
-  
+
   --card-bg: rgba(255, 255, 255, 0.03);
   --card-border: rgba(255, 255, 255, 0.08);
   --card-radius: 16px;
-  
+
   --hover-border-color: #facc15; /* Gele rand on hover */
   --hover-box-shadow: rgba(250, 204, 21, 0.2);
-  
+
   --text-color: #ffffff;
 }
 
 /* --- TOEPASSING OP DE PAGINA --- */
 body {
   background-color: var(--bg-main) !important;
-  background-image: 
-    radial-gradient(circle at 20% 30%, var(--bg-gradient-1) 0%, transparent 40%),
+  background-image:
+    radial-gradient(
+      circle at 20% 30%,
+      var(--bg-gradient-1) 0%,
+      transparent 40%
+    ),
     radial-gradient(circle at 80% 70%, var(--bg-gradient-2) 0%, transparent 40%) !important;
   color: var(--text-color) !important;
   min-height: 100vh;
@@ -31,7 +35,10 @@ body {
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--card-border) !important;
   border-radius: var(--card-radius) !important;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .set-glass-card:hover {
