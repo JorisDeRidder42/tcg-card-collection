@@ -24,7 +24,7 @@ const SetDashboard = ({ sets, savedCards, showAllSets, setShowAllSets }) => {
         >
           Pokémon Sets
         </h2>
-        <span className="text-muted small">Totaal: {sets.length} sets</span>
+        <span className="text-light">Totaal: {sets.length} sets</span>
       </div>
 
       {/* 4-koloms Grid systeem */}
@@ -82,7 +82,7 @@ const SetDashboard = ({ sets, savedCards, showAllSets, setShowAllSets }) => {
 
                   {/* Voortgangssectie en extra tekst */}
                   <div>
-                    <div className="d-flex justify-content-between align-items-center mb-1 small text-muted">
+                    <div className="d-flex justify-content-between align-items-center mb-1 small text-light">
                       <span>Voortgang</span>
                       <strong className="text-light">
                         {progress?.percentage || 0}%
@@ -91,7 +91,7 @@ const SetDashboard = ({ sets, savedCards, showAllSets, setShowAllSets }) => {
 
                     <SetProgressBar progress={progress} />
 
-                    <div className="d-flex justify-content-between align-items-center mt-2 pt-2 border-top border-secondary border-opacity-25 small text-muted">
+                    <div className="d-flex justify-content-between align-items-center mt-2 pt-2 border-top border-secondary border-opacity-25 small text-light">
                       <span>Verzameld:</span>
                       <strong className="text-light">
                         {progress?.collected || 0} /{' '}
