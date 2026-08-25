@@ -186,14 +186,12 @@ export const AuthProvider = ({ children }) => {
     if (!user) return;
     const colRef = collection(db, 'users', user.uid, 'savedCards');
     const snapshot = await getDocs(colRef);
-
     const deletes = snapshot.docs.map((item) =>
       deleteDoc(doc(db, 'users', user.uid, 'savedCards', item.id))
     );
     await Promise.all(deletes);
     setSavedCards([]);
     toast.success('Collection cleared!');
-    window.location.href = '/';
   };
   // Auth listener
   useEffect(() => {
