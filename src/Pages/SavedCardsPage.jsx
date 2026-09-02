@@ -37,16 +37,6 @@ const SavedCardsPage = () => {
                 <FaHome />
               </button>
 
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => window.print()}
-                aria-label="Print collection"
-                title="Print collection"
-              >
-                <FaPrint />
-              </button>
-
               {countCards > 0 && (
                 <button
                   type="button"

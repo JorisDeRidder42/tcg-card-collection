@@ -113,3 +113,69 @@ body {
   font-size: 0.8rem;
   font-weight: 700;
 }
+/* Card Viewer / Tinder Stack Effect */
+.card-viewer {
+  position: relative;
+  width: 100%;
+  min-height: 480px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+}
+
+/* De hoofkkaart in het midden */
+.card-viewer .main-card {
+  width: 75%;
+  max-width: 320px;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  z-index: 3;
+  transition: transform 0.3s ease;
+}
+
+/* De zij-kaarten (voorige / volgende) */
+.card-viewer .stack-card {
+  position: absolute;
+  width: 65%;
+  max-width: 280px;
+  height: auto;
+  border-radius: 14px;
+  cursor: pointer;
+  opacity: 0.5;
+  filter: brightness(0.7);
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+/* Linker kaart (Vorige) */
+.card-viewer .stack-card.left {
+  transform: translateX(-28%) rotate(-8deg) scale(0.9);
+}
+
+.card-viewer .stack-card.left:hover {
+  opacity: 0.8;
+  filter: brightness(0.9);
+  transform: translateX(-30%) rotate(-10deg) scale(0.93);
+}
+
+/* Rechter kaart (Volgende) */
+.card-viewer .stack-card.right {
+  transform: translateX(28%) rotate(8deg) scale(0.9);
+}
+
+.card-viewer .stack-card.right:hover {
+  opacity: 0.8;
+  filter: brightness(0.9);
+  transform: translateX(30%) rotate(10deg) scale(0.93);
+}
+
+/* Optionele glazen box stijlen voor de info secties */
+.card-info-box {
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.2em;
+  border-radius: 1em;
+}
